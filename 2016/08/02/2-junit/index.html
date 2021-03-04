@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>junit的使用 | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="junit的使用1.1 @Test  @BeforeClass @AfterClass @Ignore">
+<meta property="og:type" content="article">
+<meta property="og:title" content="junit的使用">
+<meta property="og:url" content="http://example.com/2016/08/02/2-junit/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="junit的使用1.1 @Test  @BeforeClass @AfterClass @Ignore">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-08-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:49:02.076Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="进阶">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,89 +219,54 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2-junit" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      junit的使用
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
+        
+        <a href="/2016/08/02/2-junit/" class="archive-article-date">
   	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="junit的使用"><a href="#junit的使用" class="headerlink" title="junit的使用"></a>junit的使用</h1><h2 id="1-1-Test-BeforeClass-AfterClass-Ignore"><a href="#1-1-Test-BeforeClass-AfterClass-Ignore" class="headerlink" title="1.1 @Test  @BeforeClass @AfterClass @Ignore"></a>1.1 @Test  @BeforeClass @AfterClass @Ignore</h2><span id="more"></span>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package com.ruozedata.bigdata.junit;</span><br><span class="line"></span><br><span class="line">import org.junit.*;</span><br><span class="line"></span><br><span class="line">public class CalTest &#123;</span><br><span class="line"></span><br><span class="line">    static Cal cal;</span><br><span class="line">    @BeforeClass</span><br><span class="line">    public static void setUp()&#123;</span><br><span class="line">        System.out.println(&quot;---set--&quot;);</span><br><span class="line">        cal &#x3D;new Cal();</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    @AfterClass</span><br><span class="line">    public static void tearDown()&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;---tear--&quot;);</span><br><span class="line">        cal&#x3D;null;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">&#x2F;&#x2F;    @Ignore     &#x2F;&#x2F;忽略测试</span><br><span class="line">    public void  add() &#123;</span><br><span class="line">        System.out.println(&quot;---add--&quot;);</span><br><span class="line">&#x2F;&#x2F;        Cal cal &#x3D; new Cal();</span><br><span class="line">        int result &#x3D; cal.add(2, 4);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;断言，用于判断想要的结果与实际结果是否一致</span><br><span class="line">        Assert.assertEquals(6, result);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void divide()&#123;</span><br><span class="line">        System.out.println(&quot;---div--&quot;);</span><br><span class="line">&#x2F;&#x2F;        Cal cal &#x3D; new Cal();</span><br><span class="line">        int divide &#x3D; cal.divide(10, 2);</span><br><span class="line">        Assert.assertEquals(5,divide);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---set--</span><br><span class="line">---div--</span><br><span class="line">---add--</span><br><span class="line">---tear--</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="1-2-Test-Before-After"><a href="#1-2-Test-Before-After" class="headerlink" title="1.2 @Test  @Before@After"></a>1.2 @Test  @Before@After</h2><p><strong>这种设计模式属于模板设计模式</strong><br>模板/模板方法设计模式<br>    预先把整个执行流程定义好<br>    执行的时候就按照预先定义好的流程按顺序执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">package com.ruozedata.bigdata.junit;</span><br><span class="line"></span><br><span class="line">import org.junit.*;</span><br><span class="line"></span><br><span class="line">public class CalTest &#123;</span><br><span class="line"></span><br><span class="line">     Cal cal;</span><br><span class="line">    @Before</span><br><span class="line">    public  void setUp()&#123;</span><br><span class="line">        System.out.println(&quot;---set--&quot;);</span><br><span class="line">        cal &#x3D;new Cal();</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    @After</span><br><span class="line">    public  void tearDown()&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;---tear--&quot;);</span><br><span class="line">        cal&#x3D;null;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">&#x2F;&#x2F;    @Ignore     &#x2F;&#x2F;忽略测试</span><br><span class="line">    public void  add() &#123;</span><br><span class="line">        System.out.println(&quot;---add--&quot;);</span><br><span class="line">&#x2F;&#x2F;        Cal cal &#x3D; new Cal();</span><br><span class="line">        int result &#x3D; cal.add(2, 4);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;断言，用于判断想要的结果与实际结果是否一致</span><br><span class="line">        Assert.assertEquals(6, result);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void divide()&#123;</span><br><span class="line">        System.out.println(&quot;---div--&quot;);</span><br><span class="line">&#x2F;&#x2F;        Cal cal &#x3D; new Cal();</span><br><span class="line">        int divide &#x3D; cal.divide(10, 2);</span><br><span class="line">        Assert.assertEquals(5,divide);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---set--</span><br><span class="line">---div--</span><br><span class="line">---tear--</span><br><span class="line">---set--</span><br><span class="line">---add--</span><br><span class="line">---tear--</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-总结"><a href="#1-3-总结" class="headerlink" title="1.3 总结"></a>1.3 总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">开发代码</span><br><span class="line">    Cal</span><br><span class="line">开发测试代码</span><br><span class="line">    CalTest</span><br><span class="line">    对于你要进行测试的方法，需要使用@Test这个注解</span><br><span class="line">    Assert.assertEquals(expected 5, result);</span><br><span class="line"></span><br><span class="line">    @Before和@After分别是在每个测试方式执行前后执行</span><br><span class="line">        一个测试方法执行一次@Before和@After</span><br><span class="line">    @BeforeClass和@AfterClass是在所有测试方法执行前后执行</span><br><span class="line">        只执行一次@BeforeClass和@AfterClass</span><br><span class="line">        @BeforeClass和@AfterClass定义的方式必须是static</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -314,7 +282,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -327,70 +295,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2016/08/02/2-junit/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          关于maven和idea的整合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java基础（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="2-junit" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +434,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

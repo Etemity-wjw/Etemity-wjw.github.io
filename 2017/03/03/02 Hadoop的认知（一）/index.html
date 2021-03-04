@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadoop的认知（一） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Hadoop的认知（一）1.hadoop中block块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop的认知（一）">
+<meta property="og:url" content="http://example.com/2017/03/03/02%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Hadoop的认知（一）1.hadoop中block块">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019120815094969.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191208153724460.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2017-03-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:07:54.878Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019120815094969.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
   
@@ -216,52 +222,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-02 Hadoop的认知（一）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop的认知（一）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/03/02%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-03-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hadoop的认知（一）"><a href="#Hadoop的认知（一）" class="headerlink" title="Hadoop的认知（一）"></a>Hadoop的认知（一）</h1><h2 id="1-hadoop中block块"><a href="#1-hadoop中block块" class="headerlink" title="1.hadoop中block块"></a>1.hadoop中block块</h2><span id="more"></span>
+<p>block默认大小为128m【hadoop2.0版本以上】，版本以下是 64M。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dfs.blocksize 134217728   &#x2F;&#x2F;128M  规格</span><br><span class="line">dfs.replication           3  &#x2F;&#x2F;副本数为三</span><br></pre></td></tr></table></figure>
+<p>Default block replication. 块副本数<br>The actual number of replications can be specified when the file is created. The default is used if replication is not specified in create time.</p>
+<p><strong>面试题:</strong><br>1、一个文件160M，块大小128M ，副本数2份，请问:实际存储多少块，实际多少存储空间？<br><strong>答：</strong>实际存储多少块： 160/128=1…32M  1+1=2 * 2=4，实际存储空间: 160*2=320m<br>2、hdfs适合小文件存储吗？为什么？<br><strong>答：</strong>（1）HDFS不适合大量小文件的存储，因namenode将文件系统的元数据存放在内存中，因此存储的文件数目受限于 namenode的内存大小。HDFS中每个文件、目录、数据块占用150Bytes。如果存放的文件数目过多的话会占用很大的内存<br>（2）HDFS适用于高吞吐量，而不适合低时间延迟的访问。如果同时存入大量的小文件会花费很长的时间<br>（3） 流式读取的方式，不适合多用户写入，以及任意位置写入。如果访问小文件，则必须从一个datanode跳转到另外一个datanode，这样大大降低了读取性能。</p>
+<h2 id="2-HDFS的架构"><a href="#2-HDFS的架构" class="headerlink" title="2.HDFS的架构"></a>2.HDFS的架构</h2><p><img src="https://img-blog.csdnimg.cn/2019120815094969.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70"></p>
+<p><strong>NameNode：</strong>管理文件系统命名空间的主服务器和管理客户端对文件的访问组成，如打开，关闭和重命名文件和目录。负责管理文件目录、文件和block的对应关系以及block和datanode的对应关系，维护目录树，接管用户的请求。<br>1、将文件的元数据保存在一个文件目录树中<br>2、在磁盘上保存为：fsimage 和 edits<br>3、保存datanode的数据信息的文件，在系统启动的时候读入内存。<br><strong>DataNode：</strong>（数据节点）管理连接到它们运行的​​节点的存储，负责处理来自文件系统客户端的读写请求。DataNodes还执行块创建，删除。<br><strong>Client：</strong>(客户端)代表用户通过与nameNode和datanode交互来访问整个文件系统，HDFS对外开放文件命名空间并允许用户数据以文件形式存储。用户通过客户端（Client）与HDFS进行通讯交互。</p>
+<h2 id="3-SNN的流程"><a href="#3-SNN的流程" class="headerlink" title="3.SNN的流程"></a>3.SNN的流程</h2><p>SecondaryNameNode工作原理图：<br><img src="https://img-blog.csdnimg.cn/20191208153724460.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>SecondaryNameNode主要负责下载NameNode中的fsImage文件和Edits文件，并合并生成新的fsImage文件，并推送给NameNode，工作原理如下：<br>1、secondarynamenode请求主namenode停止使用edits文件，暂时将新的写操作记录到一个新的文件中；<br>2、secondarynamenode从主namenode获取fsimage和edits文件（通过http get）<br>3、secondarynamenode将fsimage文件载入内存，逐一执行edits文件中的操作，创建新的fsimage文件。<br>4、secondarynamenode将新的fsimage文件发送回主namenode（使用http post）.<br>5、namenode用从secondarynamenode接收的fsimage文件替换旧的fsimage文件；用步骤1所产生的edits文件替换旧的edits文件。同时，还更新fstime文件来记录检查点执行时间。<br>6、最终，主namenode拥有最新的fsimage文件和一个更小的edits文件。当namenode处在安全模式时，管理员也可调用hadoop dfsadmin –saveNameSpace命令来创建检查点。<br>      创建检查点的触发条件受两个配置参数控制。通常情况下，secondarynamenode每隔一小时（有fs.checkpoint.period属性设置）创建检查点；此外，当编辑日志的大小达到64MB（有fs.checkpoint.size属性设置）时，也会创建检查点。系统每隔五分钟检查一次编辑日志的大小。</p>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +293,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/03/02%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%B8%80%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/06/03%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadoop的认知（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/02/01%20hadoop%20hdfs%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop单节点的安装部署</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="02 Hadoop的认知（一）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +432,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

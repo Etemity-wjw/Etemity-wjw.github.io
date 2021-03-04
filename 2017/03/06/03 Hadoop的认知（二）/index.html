@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadoop的认知（二） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Hadoop的认知（二）1.副本放置策略">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop的认知（二）">
+<meta property="og:url" content="http://example.com/2017/03/06/03%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Hadoop的认知（二）1.副本放置策略">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:15:24.812Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,52 +219,135 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-03 Hadoop的认知（二）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop的认知（二）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/06/03%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-03-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hadoop的认知（二）"><a href="#Hadoop的认知（二）" class="headerlink" title="Hadoop的认知（二）"></a>Hadoop的认知（二）</h1><h2 id="1-副本放置策略"><a href="#1-副本放置策略" class="headerlink" title="1.副本放置策略"></a>1.副本放置策略</h2><span id="more"></span>
+<p>共计3个副本<br>第一个副本：假如上传节点为DN节点，优先放置本节点；否则就随机挑选一台磁盘不太慢  CPU不太繁忙的节点；<br>第二个副本：放置在于第一个副本的不同的机架的节点上；<br>第三个副本：放置于第二个副本相同机架的不同节点上。</p>
+<h2 id="2-HDFS写流程"><a href="#2-HDFS写流程" class="headerlink" title="2.HDFS写流程"></a>2.HDFS写流程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put xxx.log &#x2F;</span><br></pre></td></tr></table></figure>
+<p>2.1 Client调用FileSystem.create(filePath)方法，与NameNode进行【rpc】通信，check是否存在及是否有权限创建；假如不通，就返回错误信息；假如通，就创建一个新文件，不关联任何的block块，返回一个FSDataOutputStream对象。<br>2.2 Client调用FSDataOutputStream对象的write()方法，先将第一块的第一个副本写到第一个DataNode，第一个副本写完；就传输给第二个DataNode，第二个副本写完；就传输给第三个DataNode，第三个副本写完。就返回一个ack packet确认包给第二个DataNode，第二个DataNode接收到第三个的ack  packet确认包加上自身完成，就返回一个ack  packet确认包给第一个DataNode，第一个DataNode接收到第二个DataNode的ack  packet确认包加上自身完成，就返回ack  packet确认包给FSDataOutputStream对象，标志第一个块 3个副本写完。然后余下的块依次这样写。<br>2.3 当向文件写入数据完成后，Client调用FSDataOutputStream.close()方法，关闭输出流。<br>2.4 再调用FileSystem.complete()方法，告诉NameNode该文件写入成功。</p>
+<h2 id="3-HDFS读流程"><a href="#3-HDFS读流程" class="headerlink" title="3.HDFS读流程"></a>3.HDFS读流程</h2><p>3.1 Client调用FileSystem.open(filePath)方法，与NameNode进行【rpc】通信，返回该文件的部分或者全部的block列表，也就是返回FSDataInputStream对象。<br>3.2 Client调用FSDataInputStream对象read()方法；<br>a.与第一个块最近的DataNode进行read,读取完成后，会check；假如没问题，就关闭与当前DataNode的通信；假如失败，会记录失败块和DataNode信息，下次不会再读取；那么会去该块的第二个DataNode地址读取。<br>b.然后去第二个块的最近的DataNode上通信读取，check后，关闭通信。<br>c.假如block列表读取完成后，文件还未结束，就再次FileSystem会从NameNode获取该文件的下一批次的block列表。<br>3.3 Client调用FSDataInputStream.close()方法，关闭输入流。</p>
+<h2 id="4-pid文件"><a href="#4-pid文件" class="headerlink" title="4.pid文件"></a>4.pid文件</h2><p>4.1.认识pid<br>PID全称是Process Identification。<br>PID是进程的代号，每个进程有唯一的PID编号。它是进程运行时系统随机分配的，并不代表专门的进程。在运行时PID是不会改变标识符的，但是你终止程序后再运行PID标识符就会被系统回收，就可能会被继续分配给新运行的程序。<br>4.2.pid文件<br>pid文件的内容：用cat命令查看，可以看到内容只有一行，记录了该进程的ID<br>pid文件的作用：防止启动多个进程副本<br>pid文件的原理：进程运行后会给.pid文件加一个文件锁，只有获得该锁的进程才有写入权限（F_WRLCK），把自身的pid写入该文件中。<br>其他试图获得该锁的进程会自动退出。<br>4.3.Hadoop中pid文件存储<br>Hadoop启动后相关进程的PID文件默认配置是保存在 /tmp 目录下，使用stop-all.sh,stop-dfs.sh,stop-yarn.sh脚本来停止相关进程是通过对应的pid文件来停止的，而Linux下 /tmp 目录有定时清理的机制，所以为了防止停止进程时出现no namenode to stop等报错，我们应该更改进程pid文件存储的位置。<br>更改方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi hadoop-env.sh</span><br><span class="line">export HADOOP_PID_DIR&#x3D;&#x2F;home&#x2F;ruoze&#x2F;tmp</span><br><span class="line"></span><br><span class="line">vi yarn-env.sh</span><br><span class="line">export YARN_PID_DIR&#x3D;&#x2F;home&#x2F;ruoze&#x2F;tmp</span><br></pre></td></tr></table></figure>
+<h2 id="5-hdfs-dfs常用命令"><a href="#5-hdfs-dfs常用命令" class="headerlink" title="5.hdfs dfs常用命令"></a>5.hdfs dfs常用命令</h2><p>1、-help[cmd] 显示命令的帮助信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -help ls</span><br></pre></td></tr></table></figure>
+
+<p>2、-ls(r) 显示当前目录下的所有文件 -R 层层循出文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -ls &#x2F;log&#x2F;map</span><br><span class="line">hdfs dfs -lsr &#x2F;log&#x2F; (递归的)</span><br></pre></td></tr></table></figure>
+
+<p>3、-du(s) 显示目录中所有文件大小，或者当只指定一个文件时，显示此文件的大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -du &#x2F;user&#x2F;hadoop&#x2F;dir1 &#x2F;user&#x2F;hadoop&#x2F;file1 hdfs:&#x2F;&#x2F;host:port&#x2F;user&#x2F;hadoop&#x2F;dir1</span><br></pre></td></tr></table></figure>
+
+<p>4、-count[-q] 显示当前目录下的所有文件大小 </p>
+<p>5、-mv 移动多个文件目录到目标目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mv &#x2F;user&#x2F;hadoop&#x2F;file1 &#x2F;user&#x2F;hadoop&#x2F;file2</span><br></pre></td></tr></table></figure>
+
+<p>6、-cp 复制多个文件到目标目录</p>
+<p>hdfs dfs -cp /user/hadoop/file1 /user/hadoop/file2 (将文件从源路径复制到目标路径。<br>这个命令允许有多个源路径，此时目标路径必须是一个目录。)</p>
+<p>7、-rm(r) 删除文件（夹）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -rmr &#x2F;log&#x2F;map1 (递归删除)</span><br></pre></td></tr></table></figure>
+
+<p>8、-put 本地文件复制到 hdfs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -put test.txt &#x2F;log&#x2F;map&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>9、-copyFromLocal 本地文件复制到 hdfs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -copyFromLOcal &#x2F;usr&#x2F;data&#x2F;text.txt &#x2F;log&#x2F;map1&#x2F; (将本地的 text.txt 复制到 hdfs 的&#x2F;log&#x2F;map1&#x2F;下)</span><br></pre></td></tr></table></figure>
+
+<p>10、-moveFromLocal 本地文件移动到 hdfs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -moveFromLocal &#x2F;usr&#x2F;data&#x2F;text.txt &#x2F;log&#x2F;map1&#x2F; (将本地的 text.txt 移动到 hdfs 的&#x2F;log&#x2F;map1&#x2F;下)</span><br></pre></td></tr></table></figure>
+
+<p>11、-get[-ignoreCrc] 复制文件到本地，可以忽略 crc 校验</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -get &#x2F;log&#x2F;map1&#x2F;* . (复制到本地当前目录下)</span><br><span class="line">hdfs dfs -get &#x2F;log&#x2F;map1&#x2F;* &#x2F;usr&#x2F;data （将 hdfs 下的&#x2F;log&#x2F;map1&#x2F;下的所有文件全部复制到本地的&#x2F;usr&#x2F;data&#x2F;下 ）</span><br></pre></td></tr></table></figure>
+
+<p>12、-getmerge[addnl] 将源目录中的所有文件排序合并到一个文件中，接受一个源目录和一个目标文件作为输入，并且将源目录中所有的文件连接成本地目标文件。addnl 是可选的，用于指定在每个文件结尾添加一个换行符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -getmerge &#x2F;log&#x2F;map1&#x2F;* &#x2F;usr&#x2F;data（将 hdfs 上的&#x2F;log&#x2F;map1&#x2F;下的所有文件合并下载到本地的&#x2F;usr&#x2F;data 下）</span><br></pre></td></tr></table></figure>
+
+<p>13、-cat 在终端显示文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -cat &#x2F;log&#x2F;map1&#x2F;part-00000 | head (读取 hdfs 上的&#x2F;log&#x2F;map1 下的 part-00000 文件 head 参数，代表前十行。)</span><br><span class="line"></span><br><span class="line">hdfs dfs -tail &#x2F;log&#x2F;map1&#x2F;part-00000 (查看文件的最后一千行)</span><br></pre></td></tr></table></figure>
+
+<p>14、-text 在终端显示文件内容，将源文件输出为文本格式。允许的格式是 zip 和 TextRecordInputStream </p>
+<p>15、-copyToLocal[-ignoreCrc] 复制文件到本地 </p>
+<p>16、-moveToLocal 移动文件到本地 </p>
+<p>17、-mkdir 创建文件夹 后跟-p 可以创建不存在的父路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir -p &#x2F;dir1&#x2F;dir11&#x2F;dir111</span><br></pre></td></tr></table></figure>
+
+<p>18、-touchz 创建一个空文件</p>
+<p>19、-grep 从 hdfs 上过滤包含某个字符的行内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -cat &#x2F;log&#x2F;testlog&#x2F;* | grep 过滤字段</span><br></pre></td></tr></table></figure>
+<h2 id="6-多节点，单节点的磁盘均衡"><a href="#6-多节点，单节点的磁盘均衡" class="headerlink" title="6.多节点，单节点的磁盘均衡"></a>6.多节点，单节点的磁盘均衡</h2><p>（1）使用数据均衡工具手动balance<br>如果是cm，选择“重新平衡”；<br>如果是手动的hadoop集群，使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-balancer.sh -threshold 20 -policy blockpool -include -f &#x2F;tmp&#x2F;ip.txt</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令通过手工筛选出磁盘高的和磁盘低的放在ip.txt文件中，这样balance就只通过这文件里的了，另外还需要设置适当的threshold值，因为是多namespace的，所以需要选择blockpool模式。<br>另外带宽也是限制balance的一个因素，在hdfs-site.xml中是有设置的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;  </span><br><span class="line">    &lt;name&gt;dfs.datanode.balance.bandwidthPerSec&lt;&#x2F;name&gt;   </span><br><span class="line">    &lt;value&gt;10485760&lt;&#x2F;value&gt;   </span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是这个需要重启，hadoop提供了一个动态调整的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -fs hdfs:&#x2F;&#x2F;ns1:8020 -setBalancerBandwidth 104857600</span><br><span class="line">hdfs dfsadmin -fs hdfs:&#x2F;&#x2F;ns2:8020 -setBalancerBandwidth 104857600</span><br></pre></td></tr></table></figure>
+
+<p>（2）上下节点<br>其实将高磁盘的节点强制Decommission是最快最有效的方案。<br>下节点的时候可能会出现有ns不能正常下掉的情况，其实这个时候节点的数据大部分已经移出去了，可能有一些块卡在那边没有移出去。<br>这个时候只能一个一个节点将已经Decommissioned节点stop掉datanode进程，如果在namenode的页面上看到有丢失块的话，就需要将这个块先get到本地，在put上去。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -get hdfs:&#x2F;&#x2F;ns1&#x2F;test1&#x2F;dt&#x3D;2016-07-24&#x2F;000816_0.lzo</span><br><span class="line">hdfs dfs -put -f 000816_0.lzo hdfs:&#x2F;&#x2F;ns1&#x2F;test1&#x2F;dt&#x3D;2016-07-24&#x2F;000816_0.lzo</span><br><span class="line">hdfs dfs -chown test1:test1 hdfs:&#x2F;&#x2F;ns1&#x2F;test1&#x2F;dt&#x3D;2016-07-24&#x2F;000816_0.lzo</span><br></pre></td></tr></table></figure>
+
+<p>前提条件需要将这个节点的datanode重新启动。</p>
+<p>（3）升降数据副本<br>升降副本是一个迫不得已的办法，这样如果datanode有挂掉节点，就会增加丢失块的几率。<br>具体降副本的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -setrep -R -w 2 hdfs:&#x2F;&#x2F;ns1&#x2F;tmp&#x2F;test.db</span><br></pre></td></tr></table></figure>
+
+<p>升副本的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -setrep -R -w 3 hdfs:&#x2F;&#x2F;ns1&#x2F;tmp&#x2F;test.db</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令是将ns1下的/tmp/test.db副本数降至2个，然后又将它升至3个副本。这样动态的升降副本可以解决。<br>另外在升降副本的遇到一个BUG，过程中可能会出现夯住的情况，推测可能是namenode的replications模块有夯住情况，所以出现该情况执行kill掉进行，跳过该块再跑。<br>总结：之所以选择使用升降副本是因为它不受带宽的控制，另外在升降副本的时候hadoop是需要重新写数的，这个时候它会优先往磁盘低写数据，这样就能将磁盘高的数据迁移至磁盘低的。</p>
+<p>（4）提高dfs.datanode.du.reserved值<br>官方解释为：适用于非分布式文件系统 (DFS) 使用的保留空间（字节/卷）。<br>通俗的意思：预留磁盘的一部分空间给操作系统用，这个参数主要是为了防止磁盘空间被写满导致的HDFS异常。通常系统默认保留5%的磁盘空间给操作系统用。<br>所以，当主机的dfs.datanode.du.reserved值高于目前磁盘使用的情况，namenode就不会分配数据过来了</p>
+<p>（5）关闭nodemanger进程<br>在现有计算资源多余的情况下，可以考虑关闭高磁盘节点的nodemanager，避免在该节点起YarnChild，因为如果在该节点上进行计算的话，数据存储首先会往本地写一份，这样更加加重了本地节点的负担。</p>
+<p>（6）distcp方式（我没太明白为什么要用这个方式）<br>distcp与cp两者的区别如下：<br>CP的模式是不走mapreduce的;DISTCP的模式是走mapreduce的，所以它优先写有nodemanager的机器;<br>CP是单线程的，类似scp的模式，在执行速度上比DISTCP要慢很多。</p>
+<p>（7）删除旧数据（我感觉是删除磁盘下的数据，而不是dfs数据）<br>该方案是在迫不得已的情况下进行的，因为删掉的数据可能以后还得补回来，这样的话又是得要浪费一定的时间。<br>另外在删除数据时候就得需要跳过回收站才能算是真正删除，可以使用的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hadoop dfs -rmr -skipTrash &#x2F;tmp&#x2F;output</span><br></pre></td></tr></table></figure>
+<h2 id="7-安全模式"><a href="#7-安全模式" class="headerlink" title="7.安全模式"></a>7.安全模式</h2><p>（1）NameNode启动<br>NameNode启动时，首先将镜像文件（Fsimage）载入内存，并执行编辑日志（Edits）中的各项操作。-旦在内存中成功建立文件系统元数据的影像，则创建一个新的Fsimage文件和一个空的编辑日志。此时，NameNode开始监听DataNode请求。这个过程期间，NameNode一直运行在安全模式，即NameNode的文件系统对于客户端来说是只读的。<br>（2）DataNode启动<br>系统中的数据块的位置并不是由NameNode维护的，而是以块列表的形式存储在DataNode中，在系统的正常操作期间，NameNode会在内存中保留所有块位置的映射信息。在安全模式下，各个DataNode会向NameNode发送最新的块列表信息，NameNode了解到足够多的块位置信息之后，即可高效运行文件系统。<br>（3）安全模式退出判断<br>如果满足“最小副本条件”，NameNode会在30秒钟之后就退出安全模式。所谓的最小副本条件指的是在整个文件系统99.9%的块满足最小副本级别（默认值：dfs.replication=1）。在启动一个刚刚格式化的HDFS集群时，因为系统中还没有任何块，所以NameNode不会进入安全模式。</p>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +360,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/06/03%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%BA%8C%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/04%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadoop的认知（三）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/03/02%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop的认知（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="03 Hadoop的认知（二）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +499,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

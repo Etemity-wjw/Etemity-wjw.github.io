@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadop API | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="3-Hadop API3.1 mkdir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadop API">
+<meta property="og:url" content="http://example.com/2017/03/30/3-hadoopapi/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="3-Hadop API3.1 mkdir">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:57:36.844Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="进阶">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,95 +219,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-3-hadoopapi" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadop API
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/30/3-hadoopapi/" class="archive-article-date">
+  	<time datetime="2017-03-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="3-Hadop-API"><a href="#3-Hadop-API" class="headerlink" title="3-Hadop API"></a>3-Hadop API</h1><h2 id="3-1-mkdir"><a href="#3-1-mkdir" class="headerlink" title="3.1 mkdir"></a>3.1 mkdir</h2><span id="more"></span>
+<p>方式一：非优化的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void mkdir() throws Exception &#123;</span><br><span class="line">    &#x2F;&#x2F;1、获取HDFS客户端</span><br><span class="line">    Configuration configuration &#x3D; new Configuration();</span><br><span class="line">    URI uri &#x3D; new URI(&quot;hdfs:&#x2F;&#x2F;hadoop001:9000&quot;);</span><br><span class="line"></span><br><span class="line">    FileSystem fileSystem &#x3D; FileSystem.get(uri, configuration, &quot;ruoze&quot;);</span><br><span class="line">    &#x2F;&#x2F;2、创建文件夹</span><br><span class="line">    fileSystem.mkdirs(new Path(&quot;&#x2F;hdfsapiV3&quot;));</span><br><span class="line">    &#x2F;&#x2F;3、关闭资源</span><br><span class="line">    if (null !&#x3D; fileSystem)&#123;</span><br><span class="line"></span><br><span class="line">        fileSystem.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方式二：优化后的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">FileSystem fileSystem;</span><br><span class="line">&#x2F;*</span><br><span class="line">* 在before前完成获取客户端操作</span><br><span class="line">**&#x2F;</span><br><span class="line">@Before</span><br><span class="line">public  void setUp() throws Exception&#123;</span><br><span class="line">    Configuration configuration &#x3D; new Configuration();</span><br><span class="line">    configuration.set(&quot;dfs.client.use.datanode.hostname&quot;,&quot;true&quot;);</span><br><span class="line">    configuration.set(&quot;dfs.replication&quot;,&quot;1&quot;);</span><br><span class="line">    URI uri &#x3D; new URI(&quot;hdfs:&#x2F;&#x2F;hadoop001:9000&quot;);</span><br><span class="line">    fileSystem &#x3D; FileSystem.get(uri, configuration, &quot;ruoze&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#x2F;*</span><br><span class="line">* 在after后完成资源关闭的操作</span><br><span class="line">**&#x2F;</span><br><span class="line">@After</span><br><span class="line">public void tearDown() throws Exception &#123;</span><br><span class="line">    if (null !&#x3D; fileSystem)&#123;</span><br><span class="line">        fileSystem.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void mkdir2() throws Exception&#123;</span><br><span class="line">    fileSystem.mkdirs(new Path(&quot;&#x2F;hdfsapiv4&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="3-2-上传到HDFS、下载到本地"><a href="#3-2-上传到HDFS、下载到本地" class="headerlink" title="3.2 上传到HDFS、下载到本地"></a>3.2 上传到HDFS、下载到本地</h2><p>上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void copyFromLocalFile() throws Exception&#123;</span><br><span class="line">    Path src &#x3D; new Path(&quot;data&#x2F;ruozedata.txt&quot;);</span><br><span class="line">    Path dst &#x3D; new Path(&quot;&#x2F;hdfsapiV2&quot;);</span><br><span class="line">    fileSystem.copyFromLocalFile(src,dst);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void copyToLocalFile() throws Exception&#123;</span><br><span class="line">    Path src &#x3D; new Path(&quot;&#x2F;hdfsapiV2&#x2F;ruozedata.txt&quot;);</span><br><span class="line">    Path dst &#x3D; new Path(&quot;dataout&#x2F;ruoze.txt&quot;);</span><br><span class="line">    fileSystem.copyToLocalFile(true,src,dst);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-3-修改文件名字-rename"><a href="#3-3-修改文件名字-rename" class="headerlink" title="3.3 修改文件名字 rename"></a>3.3 修改文件名字 rename</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void rename() throws Exception&#123;</span><br><span class="line">    Path src &#x3D; new Path(&quot;&#x2F;hdfsapiV2&#x2F;log4j.properties&quot;);</span><br><span class="line">    Path dst &#x3D; new Path(&quot;&#x2F;hdfsapiV3&#x2F;ruoze.properties&quot;);</span><br><span class="line">    fileSystem.rename(src,dst);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-4-ListFile方法"><a href="#3-4-ListFile方法" class="headerlink" title="3.4 ListFile方法"></a>3.4 ListFile方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        RemoteIterator&lt;LocatedFileStatus&gt; files &#x3D; fileSystem.listFiles(new Path(&quot;&#x2F;hdfsapiV2&quot;),true);</span><br><span class="line"></span><br><span class="line">        while (files.hasNext())&#123;</span><br><span class="line">            LocatedFileStatus fileStatus &#x3D; files.next();</span><br><span class="line">            &#x2F;&#x2F;路径</span><br><span class="line">            String path &#x3D; fileStatus.getPath().toString();</span><br><span class="line">            &#x2F;&#x2F;长度</span><br><span class="line">            long len &#x3D; fileStatus.getLen();</span><br><span class="line">            &#x2F;&#x2F;副本数</span><br><span class="line">            short replication &#x3D; fileStatus.getReplication();</span><br><span class="line">            &#x2F;&#x2F;权限</span><br><span class="line">            FsPermission permission &#x3D; fileStatus.getPermission();</span><br><span class="line">            &#x2F;&#x2F;判断是否是文件夹</span><br><span class="line">            String isDir &#x3D; fileStatus.isDirectory() ? &quot;文件夹&quot;: &quot;文件&quot;;</span><br><span class="line"></span><br><span class="line">            System.out.println(path + &quot;\t&quot; + len + &quot;\t&quot;+ replication + &quot;\t&quot;+ permission + &quot;\t&quot; + isDir);</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F;获取块的数量</span><br><span class="line">            BlockLocation[] blockLocations &#x3D; fileStatus.getBlockLocations();</span><br><span class="line"></span><br><span class="line">            for (BlockLocation location : blockLocations)&#123;</span><br><span class="line"></span><br><span class="line">                String[] hosts &#x3D; location.getHosts();</span><br><span class="line"></span><br><span class="line">                for (String host : hosts)&#123;</span><br><span class="line">                    System.out.println(host+&quot;.........&quot;);</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-5-delet方法"><a href="#3-5-delet方法" class="headerlink" title="3.5 delet方法"></a>3.5 delet方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">    public  void  delete()throws Exception&#123;</span><br><span class="line">        &#x2F;&#x2F;data&#x2F;ruozedata.txt ---&gt;&gt; &#x2F;hdfsapiV3&#x2F;pk.txt</span><br><span class="line">        fileSystem.delete(new Path(&quot;&#x2F;hdfsapiV2&quot;), true);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-6-通过数据流的方式上传文件BufferedInputStream"><a href="#3-6-通过数据流的方式上传文件BufferedInputStream" class="headerlink" title="3.6 通过数据流的方式上传文件BufferedInputStream"></a>3.6 通过数据流的方式上传文件BufferedInputStream</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void copyFromLocalFileIO() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; data&#x2F;ruozedata.txt &#x3D;&#x3D;&gt; &#x2F;hdfsapiv3&#x2F;pk.txt</span><br><span class="line"></span><br><span class="line">    BufferedInputStream in &#x3D; new BufferedInputStream(new FileInputStream(new File(&quot;data&#x2F;ruozedata.txt&quot;)));</span><br><span class="line">    FSDataOutputStream out &#x3D; fileSystem.create(new Path(&quot;&#x2F;hdfsapiv3&#x2F;pk.txt&quot;));</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; in &#x3D;&#x3D;&gt; out</span><br><span class="line">    IOUtils.copyBytes(in, out, 1024);</span><br><span class="line">    IOUtils.closeStream(in);</span><br><span class="line">    IOUtils.closeStream(out);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-7-通过三次写出文件block"><a href="#3-7-通过三次写出文件block" class="headerlink" title="3.7 通过三次写出文件block"></a>3.7 通过三次写出文件block</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void copyToLocalFileIO01() throws Exception &#123;</span><br><span class="line">    &#x2F;&#x2F; 3 block</span><br><span class="line">    FSDataInputStream in &#x3D; fileSystem.open(new Path(&quot;&#x2F;hdfsapi&#x2F;spark-3.0.0-preview-bin-2.6.0-cdh5.15.1.tgz&quot;));</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 需求：把每个block给单独下载下来</span><br><span class="line">     *</span><br><span class="line">     * 需要每个block单独下载</span><br><span class="line">     * block0： 134217728  0-134217728</span><br><span class="line">     * block1： 134217728  134217728-134217728</span><br><span class="line">     * block2：  14145902  134217728-</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    FileOutputStream out &#x3D; new FileOutputStream(new File(&quot;d:&#x2F;spark.tgz.part0&quot;));</span><br><span class="line"></span><br><span class="line">    byte[] buffer &#x3D; new byte[1024];</span><br><span class="line">    &#x2F;&#x2F; 0 - 128M</span><br><span class="line">    for(int i&#x3D;0; i&lt;1024*128; i++)&#123;</span><br><span class="line">        in.read(buffer);</span><br><span class="line">        out.write(buffer);</span><br><span class="line">    &#125;</span><br><span class="line">    IOUtils.closeStream(in);</span><br><span class="line">    IOUtils.closeStream(out);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void copyToLocalFileIO02() throws Exception &#123;</span><br><span class="line">    &#x2F;&#x2F; 3 block</span><br><span class="line">    FSDataInputStream in &#x3D; fileSystem.open(new Path(&quot;&#x2F;hdfsapi&#x2F;spark-3.0.0-preview-bin-2.6.0-cdh5.15.1.tgz&quot;));</span><br><span class="line"></span><br><span class="line">    FileOutputStream out &#x3D; new FileOutputStream(new File(&quot;d:&#x2F;spark.tgz.part1&quot;));</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 设置指定读取的offset</span><br><span class="line">    in.seek(1024*1024*128);</span><br><span class="line"></span><br><span class="line">    byte[] buffer &#x3D; new byte[1024];</span><br><span class="line">    &#x2F;&#x2F; 128M - 256M</span><br><span class="line">    for(int i&#x3D;0; i&lt;1024*128; i++)&#123; &#x2F;&#x2F; 只包括128</span><br><span class="line">        in.read(buffer);</span><br><span class="line">        out.write(buffer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    IOUtils.closeStream(in);</span><br><span class="line">    IOUtils.closeStream(out);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void copyToLocalFileIO03() throws Exception &#123;</span><br><span class="line">    &#x2F;&#x2F; 3 block</span><br><span class="line">    FSDataInputStream in &#x3D; fileSystem.open(new Path(&quot;&#x2F;hdfsapi&#x2F;spark-3.0.0-preview-bin-2.6.0-cdh5.15.1.tgz&quot;));</span><br><span class="line"></span><br><span class="line">    FileOutputStream out &#x3D; new FileOutputStream(new File(&quot;d:&#x2F;spark.tgz.part2&quot;));</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 设置指定读取的offset  256M</span><br><span class="line">    in.seek(1024*1024*128*2);</span><br><span class="line"></span><br><span class="line">    IOUtils.copyBytes(in, out, 1024);</span><br><span class="line"></span><br><span class="line">    IOUtils.closeStream(in);</span><br><span class="line">    IOUtils.closeStream(out);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -314,7 +282,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -327,70 +295,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/30/3-hadoopapi/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/04/01/MR%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MapReduce编程（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/Hive04/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HIVE03</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="3-hadoopapi" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +434,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

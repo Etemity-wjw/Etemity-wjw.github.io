@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadoop单节点的安装部署 | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Hadoop单节点的安装部署1.hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop单节点的安装部署">
+<meta property="og:url" content="http://example.com/2017/03/02/01%20hadoop%20hdfs%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Hadoop单节点的安装部署1.hadoop">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:06:42.763Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="安装部署">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,181 +219,256 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-01 hadoop hdfs单节点部署" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hadoop单节点的安装部署
+    </h1>
+  
+
+        
+        <a href="/2017/03/02/01%20hadoop%20hdfs%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2/" class="archive-article-date">
+  	<time datetime="2017-03-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-02</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hadoop单节点的安装部署"><a href="#Hadoop单节点的安装部署" class="headerlink" title="Hadoop单节点的安装部署"></a>Hadoop单节点的安装部署</h1><h2 id="1-hadoop"><a href="#1-hadoop" class="headerlink" title="1.hadoop"></a>1.hadoop</h2><span id="more"></span>
+<p>广义:以apache hadoop软件为主的生态圈(hive sqoop flume spark flink hbase)<br>狭义:apache hadoop软件  开源的<br>apache hadoop软件:<br>1.x 基本不用<br>2.x 企业主流 CDH5.x系列<br>3.x 尝试使用 CDH6.x系列<br>下载地址：<br><a target="_blank" rel="noopener" href="http://archive.cloudera.com/cdh5/cdh/5/">http://archive.cloudera.com/cdh5/cdh/5/</a><br><a target="_blank" rel="noopener" href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2.tar.gz">http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2.tar.gz</a><br>选择cdh的好处:版本兼容性 不必考虑</p>
+<h2 id="2-hadoop软件"><a href="#2-hadoop软件" class="headerlink" title="2.hadoop软件"></a>2.hadoop软件</h2><p>hdfs 存储<br>mapreduce 计算有价值的数据挖掘，由于开发难度高，代码量大，维护困难计算慢，<br>      所以大家基本不会使用MR，都使用hive sql  spark  flink<br>yarn 资源（内存 VCORE）+作业调<br>海量的数据 1000台<br>也可以通过云端下载<br>wget  <a target="_blank" rel="noopener" href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2.tar.gz">http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2.tar.gz</a><br>百度云提供 rz上传</p>
+<h2 id="3-HDFS部署"><a href="#3-HDFS部署" class="headerlink" title="3.HDFS部署"></a>3.HDFS部署</h2><h3 id="3-1-创建用户-目录"><a href="#3-1-创建用户-目录" class="headerlink" title="3.1 创建用户 目录"></a>3.1 创建用户 目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# useradd wjw</span><br><span class="line">[root@hadoop001 ~]# su - wjw</span><br><span class="line">[wjw@hadoop001 ~]$ mkdir app software sourcecode log tmp data lib</span><br><span class="line">[wjw@hadoop001 ~]$ ll</span><br><span class="line">total 0</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 app         解压的文件夹  软连接</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 data        数据</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 lib         第三方的jar</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 log         日志文件夹</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 software    压缩包</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 sourcecode  源代码编译</span><br><span class="line">drwxrwxr-x 2 wjw wjw 6 Nov 27 21:32 tmp         临时文件夹 ？？？&#x2F;tmp</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2上传压缩包"><a href="#3-2上传压缩包" class="headerlink" title="3.2上传压缩包"></a>3.2上传压缩包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# mv &#x2F;tmp&#x2F;hadoop-2.6.0-cdh5.16.2.tar.gz  &#x2F;home&#x2F;wjw&#x2F;software&#x2F;</span><br><span class="line">[root@hadoop001 ~]# chown wjw:wjw &#x2F;home&#x2F;wjw&#x2F;software&#x2F;*</span><br><span class="line">[root@hadoop001 ~]# ll &#x2F;home&#x2F;wjw&#x2F;software&#x2F;</span><br><span class="line">total 424176</span><br><span class="line">-rw-r--r-- 1 wjw wjw 434354462 Jun 18 21:14 hadoop-2.6.0-cdh5.16.2.tar.gz</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 software]$ ll</span><br><span class="line">total 424176</span><br><span class="line">-rw-r--r-- 1 wjw wjw 434354462 Jun 18 21:14 hadoop-2.6.0-cdh5.16.2.tar.gz</span><br><span class="line">[wjw@hadoop001 software]$ </span><br></pre></td></tr></table></figure>
+<h3 id="3-3-解压"><a href="#3-3-解压" class="headerlink" title="3.3  解压"></a>3.3  解压</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 software]$ tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz -C ..&#x2F;app&#x2F;</span><br><span class="line">[wjw@hadoop001 software]$ cd ..&#x2F;</span><br><span class="line">[wjw@hadoop001 ~]$ cd  app</span><br><span class="line">[wjw@hadoop001 app]$ ll</span><br><span class="line">total 4</span><br><span class="line">drwxr-xr-x 14 wjw wjw 4096 Jun  3 19:11 hadoop-2.6.0-cdh5.16.2</span><br><span class="line">[wjw@hadoop001 app]$ ln -s hadoop-2.6.0-cdh5.16.2 hadoop</span><br><span class="line">[wjw@hadoop001 app]$ ll</span><br><span class="line">total 4</span><br><span class="line">lrwxrwxrwx  1 wjw wjw   22 Nov 27 21:37 hadoop -&gt; hadoop-2.6.0-cdh5.16.2</span><br><span class="line">drwxr-xr-x 14 wjw wjw 4096 Jun  3 19:11 hadoop-2.6.0-cdh5.16.2</span><br><span class="line">[wjw@hadoop001 app]$ </span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r2.10.0/hadoop-project-dist/hadoop-common/SingleCluster.html">https://hadoop.apache.org/docs/r2.10.0/hadoop-project-dist/hadoop-common/SingleCluster.html</a><br><a target="_blank" rel="noopener" href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2/hadoop-project-dist/hadoop-common/SingleCluster.html">http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2/hadoop-project-dist/hadoop-common/SingleCluster.html</a></p>
+<h3 id="3-4环境要求"><a href="#3-4环境要求" class="headerlink" title="3.4环境要求"></a>3.4环境要求</h3><p>Required Software：<br>a.java<br>mkdir /usr/java<br>cd /usr/java<br>rz上传   jdk-8u45-linux-x64.gz包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 java]# tar -xzvf jdk-8u45-linux-x64.gz</span><br><span class="line">[root@hadoop001 java]# ll</span><br><span class="line">total 352420</span><br><span class="line">drwxr-xr-x 8 root root        89 Nov 18 14:04 jdk-11.0.1</span><br><span class="line">drwxr-xr-x 8   10  143      4096 Apr 11  2015 jdk1.8.0_45</span><br><span class="line">-rw-r--r-- 1 root root 173271626 Nov 16 13:10 jdk-8u45-linux-x64.gz</span><br><span class="line">-rw-r--r-- 1 root root 187599951 Nov 18 14:00 openjdk-11.0.1_linux-x64_bin.tar.gz</span><br><span class="line">[root@hadoop001 java]# chown -R root:root jdk1.8.0_45</span><br><span class="line">[root@hadoop001 java]# ll</span><br><span class="line">total 352420</span><br><span class="line">drwxr-xr-x 8 root root        89 Nov 18 14:04 jdk-11.0.1</span><br><span class="line">drwxr-xr-x 8 root root      4096 Apr 11  2015 jdk1.8.0_45</span><br><span class="line">-rw-r--r-- 1 root root 173271626 Nov 16 13:10 jdk-8u45-linux-x64.gz</span><br><span class="line">-rw-r--r-- 1 root root 187599951 Nov 18 14:00 openjdk-11.0.1_linux-x64_bin.tar.gz</span><br><span class="line">[root@hadoop001 java]# </span><br><span class="line"></span><br><span class="line">vi &#x2F;etc&#x2F;profile</span><br><span class="line">#env</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_45</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br><span class="line"></span><br><span class="line">[root@hadoop001 java]# source &#x2F;etc&#x2F;profile</span><br><span class="line">[root@hadoop001 java]# which java</span><br><span class="line">&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_45&#x2F;bin&#x2F;java</span><br></pre></td></tr></table></figure>
+
+<p>b.ssh 必须安装 </p>
+<h3 id="3-5-JAVA-HOME-显性配置"><a href="#3-5-JAVA-HOME-显性配置" class="headerlink" title="3.5 JAVA_HOME 显性配置"></a>3.5 JAVA_HOME 显性配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 hadoop]$ vi hadoop-env.sh</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_45</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Now you are ready to start your Hadoop cluster in one of the three supported modes:</span><br><span class="line">Local (Standalone) Mode 本地模式             不用</span><br><span class="line">Pseudo-Distributed Mode 伪分布式模式         学习 测试  1台</span><br><span class="line">Fully-Distributed Mode  分布式模型 集群模式  生产</span><br><span class="line"></span><br><span class="line">[root@hadoop001 java]# cat &#x2F;etc&#x2F;hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line">192.168.0.3 hadoop001</span><br><span class="line">[root@hadoop001 java]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-配置文件"><a href="#3-6-配置文件" class="headerlink" title="3.6 配置文件"></a>3.6 配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">etc&#x2F;hadoop&#x2F;core-site.xml:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;hdfs:&#x2F;&#x2F;hadoop001:9000&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br><span class="line"></span><br><span class="line">etc&#x2F;hadoop&#x2F;hdfs-site.xml:</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!-- xxxx </span><br><span class="line">yyy</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-ssh无密码信任关系"><a href="#3-7-ssh无密码信任关系" class="headerlink" title="3.7 ssh无密码信任关系"></a>3.7 ssh无密码信任关系</h3><p>ssh wjwdata date</p>
+<p>user: wjw<br>user：root  600权限没关系</p>
+<h3 id="3-8-环境变量-hadoop"><a href="#3-8-环境变量-hadoop" class="headerlink" title="3.8 环境变量 hadoop"></a>3.8 环境变量 hadoop</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 ~]$ </span><br><span class="line">[wjw@hadoop001 ~]$ vi .bashrc</span><br><span class="line"># .bashrc</span><br><span class="line"># Source global definitions</span><br><span class="line">if [ -f &#x2F;etc&#x2F;bashrc ]; then</span><br><span class="line">        . &#x2F;etc&#x2F;bashrc</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># Uncomment the following line if you don&#39;t like systemctl&#39;s auto-paging feature:</span><br><span class="line"># export SYSTEMD_PAGER&#x3D;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export HADOOP_HOME&#x3D;&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop</span><br><span class="line">export PATH&#x3D;$&#123;HADOOP_HOME&#125;&#x2F;bin:$&#123;HADOOP_HOME&#125;&#x2F;sbin:$PATH</span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 ~]$ source .bashrc</span><br><span class="line">[wjw@hadoop001 ~]$ which hadoop</span><br><span class="line">~&#x2F;app&#x2F;hadoop&#x2F;bin&#x2F;hadoop</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-9-格式化"><a href="#3-9-格式化" class="headerlink" title="3.9 格式化"></a>3.9 格式化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 ~]$ hdfs namenode -format</span><br><span class="line"> has been successfully formatted.</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-10-第一次启动"><a href="#3-10-第一次启动" class="headerlink" title="3.10 第一次启动"></a>3.10 第一次启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 ~]$ </span><br><span class="line">[wjw@hadoop001 ~]$ start-dfs.sh</span><br><span class="line">19&#x2F;11&#x2F;27 22:18:49 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Starting namenodes on [hadoop001]</span><br><span class="line">hadoop001: starting namenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-namenode-hadoop001.out</span><br><span class="line">The authenticity of host &#39;localhost (::1)&#39; can&#39;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:OLqoaMxlGFbCq4sC9pYgF+FdbcXHbEbtSrnMiGGFbVw.</span><br><span class="line">ECDSA key fingerprint is MD5:d3:5b:4a:ef:8e:00:41:a0:5e:80:ef:75:76:8a:a3:49.</span><br><span class="line">Are you sure you want to continue connecting (yes&#x2F;no)? yes</span><br><span class="line">localhost: Warning: Permanently added &#39;localhost&#39; (ECDSA) to the list of known hosts.</span><br><span class="line">localhost: starting datanode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-datanode-hadoop001.out</span><br><span class="line">Starting secondary namenodes [0.0.0.0]</span><br><span class="line">The authenticity of host &#39;0.0.0.0 (0.0.0.0)&#39; can&#39;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:OLqoaMxlGFbCq4sC9pYgF+FdbcXHbEbtSrnMiGGFbVw.</span><br><span class="line">ECDSA key fingerprint is MD5:d3:5b:4a:ef:8e:00:41:a0:5e:80:ef:75:76:8a:a3:49.</span><br><span class="line">Are you sure you want to continue connecting (yes&#x2F;no)? yes</span><br><span class="line">0.0.0.0: Warning: Permanently added &#39;0.0.0.0&#39; (ECDSA) to the list of known hosts.</span><br><span class="line">0.0.0.0: starting secondarynamenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-secondarynamenode-hadoop001.out</span><br><span class="line">19&#x2F;11&#x2F;27 22:19:54 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 ~]$ jps</span><br><span class="line">151203 DataNode</span><br><span class="line">151530 Jps</span><br><span class="line">150875 NameNode</span><br><span class="line">151406 SecondaryNameNode</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br></pre></td></tr></table></figure>
+
+
+<p>坑:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 .ssh]$ cat known_hosts</span><br><span class="line">hadoop001,192.168.0.3 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBG9N5IGRTqwqGGHZcyNJ2i7lG54isK19GMq+Zw3VDIr64dS2sqoZ79n+8Ibz8ZJsU1aNiaJJTzYUvuxZv5W4iHQ&#x3D;</span><br><span class="line">localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBG9N5IGRTqwqGGHZcyNJ2i7lG54isK19GMq+Zw3VDIr64dS2sqoZ79n+8Ibz8ZJsU1aNiaJJTzYUvuxZv5W4iHQ&#x3D;</span><br><span class="line">0.0.0.0 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBG9N5IGRTqwqGGHZcyNJ2i7lG54isK19GMq+Zw3VDIr64dS2sqoZ79n+8Ibz8ZJsU1aNiaJJTzYUvuxZv5W4iHQ&#x3D;</span><br><span class="line">[wjw@hadoop001 .ssh]$ </span><br><span class="line"></span><br><span class="line">ssh hadoop001 date</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-11-DN-SNN都以-hadoop001启动"><a href="#3-11-DN-SNN都以-hadoop001启动" class="headerlink" title="3.11 DN SNN都以 hadoop001启动"></a>3.11 DN SNN都以 hadoop001启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 ~]$ stop-dfs.sh</span><br><span class="line">[wjw@hadoop001 ~]$ start-dfs.sh</span><br><span class="line">19&#x2F;11&#x2F;27 22:21:55 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Starting namenodes on [hadoop001]</span><br><span class="line">hadoop001: starting namenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-namenode-hadoop001.out</span><br><span class="line">localhost: starting datanode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-datanode-hadoop001.out</span><br><span class="line">Starting secondary namenodes [0.0.0.0]</span><br><span class="line">0.0.0.0: starting secondarynamenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-secondarynamenode-hadoop001.out</span><br><span class="line">19&#x2F;11&#x2F;27 22:22:09 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[wjw@hadoop001 ~]$ jps</span><br><span class="line">152354 NameNode </span><br><span class="line">152484 DataNode</span><br><span class="line">152660 SecondaryNameNode</span><br><span class="line">153194 Jps</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br></pre></td></tr></table></figure>
+
+<p>NN：hadoop001  fs.defaultFS控制的<br>DN: slaves文件<br>SNN:<br> <property><br>        <name>dfs.namenode.secondary.http-address</name><br>        <value>hadoop001:50090</value><br>    </property><br> <property><br>        <name>dfs.namenode.secondary.https-address</name><br>        <value>hadoop001:50091</value><br>    </property></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 hadoop]$ start-dfs.sh</span><br><span class="line">19&#x2F;11&#x2F;27 22:40:20 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Starting namenodes on [hadoop001]</span><br><span class="line">hadoop001: starting namenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-namenode-hadoop001.out</span><br><span class="line">hadoop001: starting datanode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-datanode-hadoop001.out</span><br><span class="line">Starting secondary namenodes [hadoop001]</span><br><span class="line">hadoop001: starting secondarynamenode, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;hadoop-wjw-secondarynamenode-hadoop001.out</span><br><span class="line">19&#x2F;11&#x2F;27 22:40:34 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br></pre></td></tr></table></figure>
+<h3 id="3-12"><a href="#3-12" class="headerlink" title="3.12"></a>3.12</h3><p>namenode 名称节点 老大  读写请求先经过它   主节点<br>datanode 数据节点 小弟  存储数据 检索数据  从节点<br>secondarynamenode 第二名称节点 老二  h+1</p>
+<p>大数据组件基本都是主从架构 hdfs     hbase（读写请求不经过老大 master进程） </p>
+<p><a target="_blank" rel="noopener" href="http://hadoop001:50070/">http://hadoop001:50070</a></p>
+<p>Safemode is off.</p>
+<h3 id="3-13-hadoop基本命令"><a href="#3-13-hadoop基本命令" class="headerlink" title="3.13 hadoop基本命令"></a>3.13 hadoop基本命令</h3><configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://hadoop001:9000</value>
+    </property>
+</configuration>
+
+<p>hadoop fs -mkdir /<br>hadoop fs -put<br>hadoop fs -get<br>hadoop fs -cat<br>hadoop fs -rm<br>hadoop fs -ls</p>
+<h2 id="4-YARN部署"><a href="#4-YARN部署" class="headerlink" title="4.YARN部署"></a>4.YARN部署</h2><h3 id="4-1-YARN部署"><a href="#4-1-YARN部署" class="headerlink" title="4.1 YARN部署"></a>4.1 YARN部署</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 hadoop]$ cp mapred-site.xml.template mapred-site.xml</span><br><span class="line">etc&#x2F;hadoop&#x2F;mapred-site.xml:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br><span class="line"></span><br><span class="line">etc&#x2F;hadoop&#x2F;yarn-site.xml:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;hadoop001:18088&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br><span class="line">注：端口需要更改，避免被挖矿。默认：8088，更改为18088</span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 hadoop]$ start-yarn.sh</span><br><span class="line">starting yarn daemons</span><br><span class="line">starting resourcemanager, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;yarn-wjw-resourcemanager-hadoop001.out</span><br><span class="line">hadoop001: starting nodemanager, logging to &#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;logs&#x2F;yarn-wjw-nodemanager-hadoop001.out</span><br><span class="line">[wjw@hadoop001 hadoop]$ jps</span><br><span class="line">16884 NodeManager</span><br><span class="line">12981 DataNode</span><br><span class="line">16950 Jps</span><br><span class="line">12888 NameNode</span><br><span class="line">16792 ResourceManager</span><br><span class="line">13148 SecondaryNameNode</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="4-2-yarn是否成功"><a href="#4-2-yarn是否成功" class="headerlink" title="4.2 yarn是否成功"></a>4.2 yarn是否成功</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 hadoop]$ find .&#x2F; -name &#39;*example*.jar&#39;</span><br><span class="line">.&#x2F;share&#x2F;hadoop&#x2F;mapreduce1&#x2F;hadoop-examples-2.6.0-mr1-cdh5.16.2.jar</span><br><span class="line">.&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;sources&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2-test-sources.jar</span><br><span class="line">.&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;sources&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2-sources.jar</span><br><span class="line">.&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar</span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line">&#x2F;&#x2F;编辑rz文件</span><br><span class="line">[wjw@hadoop001 ~]$ vim rz.log </span><br><span class="line">[wjw@hadoop001 ~]$ hdfs dfs -mkdir -p &#x2F;wc&#x2F;input&#x2F;</span><br><span class="line">20&#x2F;07&#x2F;06 07:16:41 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[wjw@hadoop001 ~]$ hdfs dfs -put rz.log &#x2F;wc&#x2F;input&#x2F;</span><br><span class="line">20&#x2F;07&#x2F;06 07:17:43 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[wjw@hadoop001 ~]$ hadoop jar \</span><br><span class="line">&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar \</span><br><span class="line">wordcount \</span><br><span class="line">&#x2F;wc&#x2F;input \</span><br><span class="line">&#x2F;wc&#x2F;output</span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 ~]$ hdfs dfs -cat &#x2F;wc&#x2F;output&#x2F;part-r-00000</span><br><span class="line">20&#x2F;07&#x2F;06 07:28:00 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">123123123123123123123123123123123123	1</span><br><span class="line">j	2</span><br><span class="line">k	2</span><br><span class="line">l	2</span><br><span class="line">q	1</span><br><span class="line">w	3</span><br><span class="line">[wjw@hadoop001 ~]$</span><br><span class="line">&#x2F;&#x2F;结果正常</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>**HDFS **存储 计算结果又返回存储HDFS<br><strong>MR jar包</strong> 计算逻辑<br><strong>Yarn</strong> 资源+作业调度</p>
+<h2 id="5-jps真正使用"><a href="#5-jps真正使用" class="headerlink" title="5.jps真正使用"></a>5.jps真正使用</h2><p>5.1 位置在哪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 ~]$ which jps</span><br><span class="line">&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_45&#x2F;bin&#x2F;jps</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 ~]$ jps</span><br><span class="line">2594 NameNode</span><br><span class="line">2724 DataNode</span><br><span class="line">3061 ResourceManager</span><br><span class="line">3173 NodeManager</span><br><span class="line">3526 Jps</span><br><span class="line">2879 SecondaryNameNode</span><br><span class="line">[wjw@hadoop001 ~]$ jps --help</span><br><span class="line">illegal argument: --help</span><br><span class="line">usage: jps [-help]</span><br><span class="line">       jps [-q] [-mlvV] [&lt;hostid&gt;]</span><br><span class="line"></span><br><span class="line">Definitions:</span><br><span class="line">    &lt;hostid&gt;:      &lt;hostname&gt;[:&lt;port&gt;]</span><br><span class="line">[wjw@hadoop001 ~]$ jps -l</span><br><span class="line">2594 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">2724 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">3061 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">3173 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br><span class="line">3610 sun.tools.jps.Jps</span><br><span class="line">2879 org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode</span><br><span class="line">[wjw@hadoop001 ~]$ </span><br></pre></td></tr></table></figure>
+
+<p>5.2 对应的进程的标识文件在哪？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 tmp]# ll</span><br><span class="line">drwxr-xr-x 2 wjw  wjw  61 Nov 30 21:23 hsperfdata_wjw</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>进程是 wjw启动的 /tmp/hsperfdata_username</p>
+<p>5.3 作用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查询 pid 进程名称</span><br></pre></td></tr></table></figure>
+
+<p>5.4 process information unavailable  CDH<br>进程所属的用户 去执行 jps命令，只显示自己的相关的进程信息</p>
+<p>root用户 看所有的，但是显示不可用</p>
+<p>真假判断 : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 hsperfdata_wjw]# ps -ef|grep 31488</span><br><span class="line">root       5291   3912  0 21:32 pts&#x2F;1    00:00:00 grep --color&#x3D;auto 31488</span><br><span class="line">[root@hadoop001 hsperfdata_wjw]# </span><br><span class="line"></span><br><span class="line">[root@hadoop001 hsperfdata_wjw]# ps -ef|grep 31488 | grep -v grep | wc -l</span><br><span class="line">0</span><br><span class="line">[root@hadoop001 hsperfdata_wjw]# ps -ef|grep 2594 | grep -v grep | wc -l</span><br><span class="line">1</span><br><span class="line">[root@hadoop001 hsperfdata_wjw]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>5.5 文件 不影响 进程的启动和停止</p>
+<p>5.6 Linux机制 oom-kill机制<br>free -m 查看机器的内存情况</p>
+<p>某个进程 memory 使用过高，机器为了保护自己，放置夯住，去杀死内存使用最多的进程。<br>比如 5806   kill</p>
+<p>kill log info 断了  cat log找error<br>VM 2G CDH mysql+server ok 挂了 </p>
+<p><strong>意识: 以后进程挂了–》log位置–》error: 有error具体分析；没 想到oom机制</strong><br>free -m<br>cat /var/log/messages | grep oom</p>
+<p>5.7 Linux机制 /tmp默认存储周期 1个月 会自动清空不在规则以内的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 tmp]# cat yarn-wjw-nodemanager.pid</span><br><span class="line">7855</span><br><span class="line">[root@hadoop001 tmp]# </span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 hadoop]$ vi hadoop-env.sh</span><br><span class="line">export HADOOP_PID_DIR&#x3D;&#x2F;home&#x2F;wjw&#x2F;tmp</span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 hadoop]$ cat yarn-env.sh</span><br><span class="line">export YARN_PID_DIR&#x3D;&#x2F;home&#x2F;wjw&#x2F;tmp</span><br><span class="line">&#x2F;&#x2F;手动添加</span><br><span class="line">[wjw@hadoop001 ~]$ cd tmp</span><br><span class="line">[wjw@hadoop001 tmp]$ ll</span><br><span class="line">total 20</span><br><span class="line">-rw-rw-r-- 1 wjw wjw 6 Nov 30 22:05 hadoop-wjw-datanode.pid</span><br><span class="line">-rw-rw-r-- 1 wjw wjw 6 Nov 30 22:05 hadoop-wjw-namenode.pid</span><br><span class="line">-rw-rw-r-- 1 wjw wjw 6 Nov 30 22:05 hadoop-wjw-secondarynamenode.pid</span><br><span class="line">-rw-rw-r-- 1 wjw wjw 6 Nov 30 22:03 yarn-wjw-nodemanager.pid</span><br><span class="line">-rw-rw-r-- 1 wjw wjw 6 Nov 30 22:02 yarn-wjw-resourcemanager.pid</span><br><span class="line">[wjw@hadoop001 tmp]$ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="6-修改机器名称"><a href="#6-修改机器名称" class="headerlink" title="6.修改机器名称"></a>6.修改机器名称</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">centos7.x</span><br><span class="line">[root@JD ~]# hostnamectl</span><br><span class="line">   Static hostname: JD</span><br><span class="line">         Icon name: computer-vm</span><br><span class="line">           Chassis: vm</span><br><span class="line">        Machine ID: 983e7d6ed0624a2499003862230af382</span><br><span class="line">           Boot ID: c78cf2bffbea43d8a88110b3b8fa0c5f</span><br><span class="line">    Virtualization: kvm</span><br><span class="line">  Operating System: CentOS Linux 7 (Core)</span><br><span class="line">       CPE OS Name: cpe:&#x2F;o:centos:centos:7</span><br><span class="line">            Kernel: Linux 3.10.0-327.el7.x86_64</span><br><span class="line">      Architecture: x86-64</span><br><span class="line">[root@JD ~]# hostnamectl --help</span><br><span class="line">hostnamectl [OPTIONS...] COMMAND ...</span><br><span class="line"></span><br><span class="line">Query or change system hostname.</span><br><span class="line"></span><br><span class="line">  -h --help              Show this help</span><br><span class="line">     --version           Show package version</span><br><span class="line">     --no-ask-password   Do not prompt for password</span><br><span class="line">  -H --host&#x3D;[USER@]HOST  Operate on remote host</span><br><span class="line">  -M --machine&#x3D;CONTAINER Operate on local container</span><br><span class="line">     --transient         Only set transient hostname</span><br><span class="line">     --static            Only set static hostname</span><br><span class="line">     --pretty            Only set pretty hostname</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  status                 Show current hostname settings</span><br><span class="line">  set-hostname NAME      Set system hostname</span><br><span class="line">  set-icon-name NAME     Set icon name for host</span><br><span class="line">  set-chassis NAME       Set chassis type for host</span><br><span class="line">  set-deployment NAME    Set deployment environment for host</span><br><span class="line">  set-location NAME      Set location for host</span><br><span class="line"></span><br><span class="line">[root@JD ~]# hostnamectl set-hostname hadoop001</span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# cat &#x2F;etc&#x2F;hostname </span><br><span class="line">hadoop001</span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# vi &#x2F;etc&#x2F;hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line">192.168.0.3 hadoop001</span><br></pre></td></tr></table></figure>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">安装部署</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
+        			<a href="/categories/安装//" class="article-tag-list-link color3">安装</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/02/01%20hadoop%20hdfs%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/03/02%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadoop的认知（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/23/sql%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL语句（二）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="01 hadoop hdfs单节点部署" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +491,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

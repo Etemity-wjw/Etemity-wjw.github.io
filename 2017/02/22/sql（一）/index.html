@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>SQL语句（一） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="SQL语句（一）1.创建数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL语句（一）">
+<meta property="og:url" content="http://example.com/2017/02/22/sql%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="SQL语句（一）1.创建数据库">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191202141659684.png">
+<meta property="article:published_time" content="2017-02-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:29:54.329Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191202141659684.png">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
   
@@ -216,52 +221,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-sql（一）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      SQL语句（一）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/02/22/sql%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-02-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SQL语句（一）"><a href="#SQL语句（一）" class="headerlink" title="SQL语句（一）"></a>SQL语句（一）</h1><h2 id="1-创建数据库"><a href="#1-创建数据库" class="headerlink" title="1.创建数据库"></a>1.创建数据库</h2><span id="more"></span>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create database spark; &#x2F;&#x2F;创建数据库</span><br><span class="line">grant all privileges on *.* to jepson@&#39;%&#39; identified by &#39;123456&#39;; &#x2F;&#x2F;创建用户、赋予权限、创建密码</span><br><span class="line">flush privileges; &#x2F;&#x2F;刷新权限</span><br></pre></td></tr></table></figure>
+<h2 id="2-杀sql"><a href="#2-杀sql" class="headerlink" title="2.杀sql"></a>2.杀sql</h2><p>mysql -uroot -p123456<br>mysql -u root -p123456<br>mysql -u root -p 123456  -p不能有空格<br>命令行不能带有密码 否则history查看泄露<br> show processlist; //查看当前进程<br><img src="https://img-blog.csdnimg.cn/20191202141659684.png" alt="在这里插入图片描述"><br> kill id; //删除当前id的sql进程<br> 看时间，找到哪个消耗时间长的，有可能导致mysql服务夯住、锁死，<br> 这个执行的sql确认清楚，到底能不能kill。</p>
+<h2 id="3-字段类型"><a href="#3-字段类型" class="headerlink" title="3.字段类型"></a>3.字段类型</h2><p>3.1 数值类型<br>int  //整数<br>long //长整型<br>float //单精度<br>double //双精度<br>decimal //小数值 （金额）<br>3.2 字符串类型<br>    char       字节        定长 0-255字节 axxxxxxxxx 会自动补全 255字节<br>    varchar  字符串  变长 0-65535字节  ==》优先选择<br>3.3 日期<br>    date 日期  YYYY-MM-DD<br>    time 时间 HH:MM:SS<br>    datetime  年月日时分秒 YYYY-MM-DD HH:MM:SS<br>    timestamp 年月日时分秒 YYYY-MM-DD HH:MM:SS </p>
+<p>面试题：<br>datetime timestamp区别？<br>答：DATETIME<br>日期和时间的组合。支持的范围是’1000-01-01 00:00:00’到’9999-12-31 23:59:59’。MySQL以’YYYY-MM-DD HH:MM:SS’格式显示DATETIME值，但允许使用字符串或数字为DATETIME列分配值。<br>TIMESTAMP[(M)]<br>时间戳。范围是’1970-01-01 00:00:00’到2037年。<br>TIMESTAMP列用于INSERT或UPDATE操作时记录日期和时间。如果你不分配一个值，表中的第一个TIMESTAMP列自动设置为最近操作的日期和时间。也可以通过分配一个NULL值，将TIMESTAMP列设置为当前的日期和时间。<br>TIMESTAMP值返回后显示为’YYYY-MM-DD HH:MM:SS’格式的字符串，显示宽度固定为19个字符。如果想要获得数字值，应在TIMESTAMP 列添加+0。<br>在datetime timestamp的选择上面，<br>如果在时间上要超过Linux时间的，或者服务器时区不一样的就建议选择 datetime。<br>如果是想要使用自动插入时间或者自动更新时间功能的，可以使用timestamp。<br>如果只是想表示年、日期、时间的还可以使用 year、 date、 time，它们分别占据 1、3、3 字节，而datetime就是它们的集合。</p>
+<h2 id="4-sql类型"><a href="#4-sql类型" class="headerlink" title="4.sql类型"></a>4.sql类型</h2><p>DDL 数据定义语言: create drop 创建和删除<br>DML 数据操作语言: insert update delete select 增删改查<br>DCL 数据控制语言: grant 赋予权限</p>
+<h2 id="5-建表规划"><a href="#5-建表规划" class="headerlink" title="5.建表规划"></a>5.建表规划</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">use spark; #切换数据库</span><br><span class="line">create table rxdata(</span><br><span class="line">id int(<span class="number">11</span>) not <span class="literal">null</span> auto_increment,</span><br><span class="line">name varchar(<span class="number">200</span>),</span><br><span class="line">age  int(<span class="number">3</span>),</span><br><span class="line">createuser varchar(<span class="number">200</span>) ,</span><br><span class="line">createtime timestamp not <span class="literal">null</span> <span class="keyword">default</span> current_timestamp,</span><br><span class="line">updateuser varchar(<span class="number">200</span>) ,</span><br><span class="line">updatetime timestamp not <span class="literal">null</span> <span class="keyword">default</span> current_timestamp on update current_timestamp,</span><br><span class="line">primary key (id)</span><br><span class="line">); #创建rxdata这张表</span><br></pre></td></tr></table></figure>
+<p>a.表名称 字段名称 不能是中文 不能是汉语拼音<br>b.统一风格： 已经存在的表 风格是什么== leader check<br>        create_user<br>        createuser<br>        新项目 风格是什么 == 取决于自己<br>        ctime<br>        cretime<br>        createtime<br>        cre_time<br>        create_time<br>c.第一个字段 必然是 id 自增长 主键 无意义  (懂不懂mysql)<br><strong>面试题：mysql自增长id有什么好处？</strong><br>mysql使用什么字段做主键，是重点考虑两方面：业务场景和效率问题。在满足业务场景的前提下，使用自增序列做主键是最优选择。原因如下：<br>1.自增主键节省存储空间。<br>2.innodb的索引特性导致了自增id做主键是效率最好的<br>与UUID主键对比：<br>在500W记录表的测试下：<br>（1） 普通单条或者20条左右的记录检索，uuid为主键的相差不大几乎效率相同；<br>（2） 但是范围查询特别是上百成千条的记录查询，自增id的效率要大于uuid；<br>（3） 在范围查询做统计汇总的时候，自增id的效率要大于uuid；<br>（4） 在存储上面，自增id所占的存储空间是uuid的1/2；<br>（5） 在备份恢复上，自增ID主键稍微优于UUID。<br>在1000W记录表的测试下：<br>（1）普通单条或者20条左右的记录检索，自增主键效率是uuid主键的2到3倍；<br>（2）但是范围查询特别是上百成千条的记录查询，自增id的效率要大于uuid；<br>（3）在范围查询做统计汇总的时候，自增id主键的效率是uuid主键1.5到2倍；<br>（4）在存储上面，自增id所占的存储空间是uuid的1/2；<br>（5）在写入上面，自增ID主键的效率是UUID主键的3到10倍，相差比较明显，特别是update小范围之内的数据上面。<br>（6）在备份恢复上，自增ID主键稍微优于UUID。<br>对于InnoDB这种聚集主键类型的引擎来说，数据会按照主键进行排序，由于UUID的无序性，InnoDB会产生巨大的IO压力，而且由于索引和数据存储在一起，字符串做主键会造成存储空间增大一倍。<br>在存储和检索的时候，innodb会对主键进行物理排序，这对auto_increment_int是个好消息，因为后一次插入的主键位置总是在最后。但是对uuid来说，这却是个坏消息，因为uuid是杂乱无章的，每次插入的主键位置是不确定的，可能在开头，也可能在中间，在进行主键物理排序的时候，势必会造成大量的 IO操作影响效率，在数据量不停增长的时候，特别是数据量上了千万记录的时候，读写性能下降的非常厉害。<br>总结：<br>（1）单实例或者单节点组：<br>经过500W、1000W的单机表测试，自增ID相对UUID来说，自增ID主键性能高于UUID，磁盘存储费用比UUID节省一半的钱。所以在单实例上或者单节点组上，使用自增ID作为首选主键。<br>（2）分布式架构场景：<br>20个节点组下的小型规模的分布式场景，为了快速实现部署，可以采用多花存储费用、牺牲部分性能而使用UUID主键快速部署；<br>20到200个节点组的中等规模的分布式场景，可以采用自增ID+步长的较快速方案。<br>200以上节点组的大数据下的分布式场景，可以借鉴类似twitter雪花算法构造的全局自增ID作为主键。<br><strong>面试题：如果在使用过程中主键自增长超了怎么办？</strong><br>参考：链接: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35393693/article/details/100059966">MySQL中的自增主键用完了怎么办？</a>.<br>面试官:”那自增主键达到最大值了，用完了怎么办？”<br>你:”这问题没遇到过，因为自增主键我们用int类型，一般达不到最大值，我们就分库分表了，所以不曾遇见过！”<br>d.一张表只有一个主键 primary key==》id<br>     unique+not null //唯一+非空约束<br>     业务字段 比如需要唯一  unique约束<br>     ALTER TABLE ruozedata.rzdata<br>     ADD CONSTRAINT rzdata_un UNIQUE KEY (name) ;<br>e.后四个字段 建议都要加<br>用户         修改用户<br>创建时间  修改时间<br>createuser varchar(200) ,<br>createtime timestamp not null default current_timestamp,<br>updateuser varchar(200) ,<br>updatetime timestamp not null default current_timestamp on update current_timestamp,<br>f.业务字段 注释加上 *****<br>COMMENT ‘用户名称’<br>COMMENT ‘用户年龄’<br>g.ENGINE=InnoDB  CHARSET<br>CREATE TABLE <code>rxdata</code> (<br>  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,<br>  <code>name</code> varchar(200) DEFAULT NULL COMMENT ‘用户名称’,<br>  <code>age</code> int(3) DEFAULT NULL COMMENT ‘用户年龄’,<br>  <code>createuser</code> varchar(200) DEFAULT NULL,<br>  <code>createtime</code> timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,<br>  <code>updateuser</code> varchar(200) DEFAULT NULL,<br>  <code>updatetime</code> timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,<br>  PRIMARY KEY (<code>id</code>),<br>  UNIQUE KEY <code>rzdata_un</code> (<code>name</code>)<br>) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1<br>DEFAULT CHARSET=latin1 字符集<br><strong>面试题：ENGINE=InnoDB 是什么？与MyISAM区别是什么？</strong></p>
+<h2 id="6-增删改查"><a href="#6-增删改查" class="headerlink" title="6.增删改查"></a>6.增删改查</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">insert into rxdata(name,age,createuser,updateuser) </span><br><span class="line">values(<span class="string">&#x27;jespon22&#x27;</span>,<span class="number">222</span>,<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;r&#x27;</span>);</span><br><span class="line"><span class="comment">//增加数据</span></span><br><span class="line">update rxdata set age=<span class="number">19</span> where id =<span class="number">1</span>;</span><br><span class="line"><span class="comment">//更新数据</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> rxdata where id=<span class="number">6</span>;</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">select * <span class="keyword">from</span> rxdata; </span><br><span class="line"><span class="comment">//切记生产写sql不要加*，效率太低</span></span><br><span class="line">select id,name,age <span class="keyword">from</span> rxdata;  </span><br><span class="line"><span class="comment">//查询数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//财务系统 </span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> rxdata;  <span class="comment">//解决办法通过binlog文件恢复 arch/mysql-bin.000001</span></span><br><span class="line">update <span class="keyword">delete</span> 切记 where <span class="number">1</span>条 多条  createtime&gt;=<span class="string">&#x27;2019-01-01 00:00:00&#x27;</span></span><br><span class="line">rxdata <span class="number">1</span>亿</span><br><span class="line">select id,name,age <span class="keyword">from</span> rxdata;   <span class="comment">//生产数据库 其他请求 夯住</span></span><br><span class="line">select id,name,age <span class="keyword">from</span> rxdata WHERE ID=<span class="number">1</span>; </span><br><span class="line">select id,name,age <span class="keyword">from</span> rxdata limit <span class="number">1000</span>;  <span class="comment">// slave从库查询</span></span><br></pre></td></tr></table></figure>
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +292,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/02/22/sql%EF%BC%88%E4%B8%80%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/02/23/sql%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          SQL语句（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/21/MySQL%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL 安装与使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="sql（一）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +431,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

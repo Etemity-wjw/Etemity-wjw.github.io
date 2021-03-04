@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>SQL语句（二） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="SQL语句（二）1.sql的where各种条件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL语句（二）">
+<meta property="og:url" content="http://example.com/2017/02/23/sql%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="SQL语句（二）1.sql的where各种条件">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191202174653458.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191202174753677.png">
+<meta property="article:published_time" content="2017-02-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:31:46.738Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191202174653458.png">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
   
@@ -216,52 +222,287 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-sql（二）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      SQL语句（二）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/02/23/sql%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-02-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SQL语句（二）"><a href="#SQL语句（二）" class="headerlink" title="SQL语句（二）"></a>SQL语句（二）</h1><h2 id="1-sql的where各种条件"><a href="#1-sql的where各种条件" class="headerlink" title="1.sql的where各种条件"></a>1.sql的where各种条件</h2><span id="more"></span>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select * from rxdata where name &#x3D; wjw; &#x2F;&#x2F;查询name为wjw的数据</span><br><span class="line">select * from rxdata where name &#x3D; wjw and age &#x3D; 24;&#x2F;&#x2F;查询name为wjw并且age为24的数据</span><br><span class="line">select * from rxdata where name &#x3D; wjw or age &#x3D; 24;&#x2F;&#x2F;查询name为wjw或age为24的数据</span><br><span class="line">select*  from rxdata where name like &#39;%j%&#39;; &#x2F;&#x2F;查询name存在j的数据w</span><br><span class="line">select*  from rxdata where name like &#39;w%&#39;; &#x2F;&#x2F;查询name存在开头为w的数据</span><br><span class="line">select*  from rxdata where name like &#39;%&#39;w; &#x2F;&#x2F;查询name存在结尾为w的数据</span><br><span class="line">select*  from rxdata where name like &#39;_j%&#39;; &#x2F;&#x2F;查询name存在第二个为j的数据</span><br><span class="line">select*  from rxdata where name not like &#39;w%&#39;; &#x2F;&#x2F;查询name存在开头不为w的数据</span><br></pre></td></tr></table></figure>
+<h2 id="2-union合并"><a href="#2-union合并" class="headerlink" title="2.union合并"></a>2.union合并</h2><p>先创建a，b表，并插入数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create table a(id int, aname varchar(200),age int );</span><br><span class="line">create table b(id int, bname varchar(200),address varchar(200));</span><br></pre></td></tr></table></figure>
+<p>union 和union all </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,aname from a  union select id,bname from b;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20191202174653458.png" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,aname from a  union all select id,bname from b;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20191202174753677.png" alt="在这里插入图片描述"></p>
+<h2 id="3-join语句"><a href="#3-join语句" class="headerlink" title="3.join语句"></a>3.join语句</h2><p>左连接 left join</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.*,b.* from a left join b on a.id&#x3D;b.id;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>aname</th>
+<th>age</th>
+<th>id</th>
+<th>bname</th>
+<th>address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>wjw1</td>
+<td>24</td>
+<td>1</td>
+<td>wjw1</td>
+<td>hf</td>
+</tr>
+<tr>
+<td>3</td>
+<td>wjw3</td>
+<td>26</td>
+<td>3</td>
+<td>wjw3</td>
+<td>bj</td>
+</tr>
+<tr>
+<td>2</td>
+<td>wjw2</td>
+<td>25</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+</tr>
+<tr>
+<td>右连接 right join</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.*,b.* from a right join b on a.id&#x3D;b.id;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>aname</th>
+<th>age</th>
+<th>id</th>
+<th>bname</th>
+<th>address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>wjw1</td>
+<td>24</td>
+<td>1</td>
+<td>wjw1</td>
+<td>hf</td>
+</tr>
+<tr>
+<td>3</td>
+<td>wjw3</td>
+<td>26</td>
+<td>3</td>
+<td>wjw3</td>
+<td>bj</td>
+</tr>
+<tr>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>5</td>
+<td>wjw5</td>
+<td>sh</td>
+</tr>
+<tr>
+<td>内连接 inner join</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.*,b.* from a inner join b on a.id&#x3D;b.id;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>aname</th>
+<th>age</th>
+<th>id</th>
+<th>bname</th>
+<th>address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>wjw1</td>
+<td>24</td>
+<td>1</td>
+<td>wjw1</td>
+<td>hf</td>
+</tr>
+<tr>
+<td>3</td>
+<td>wjw3</td>
+<td>26</td>
+<td>3</td>
+<td>wjw3</td>
+<td>bj</td>
+</tr>
+</tbody></table>
+<h2 id="4-统计语句"><a href="#4-统计语句" class="headerlink" title="4.统计语句"></a>4.统计语句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from a ；</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>aname</th>
+<th>age</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>wjw1</td>
+<td>24</td>
+</tr>
+<tr>
+<td>2</td>
+<td>wjw2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>3</td>
+<td>wjw3</td>
+<td>26</td>
+</tr>
+<tr>
+<td>4</td>
+<td>wjw1</td>
+<td>23</td>
+</tr>
+<tr>
+<td>5</td>
+<td>wjw2</td>
+<td>22</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;sum求和</span><br><span class="line">select sum(age) as agesum from a;  #数值求和   </span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>agesum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>120</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;count统计数据条数</span><br><span class="line">select count(*)  from a;  #数值求和 求条数  1+1+1&#x3D;3</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5</td>
+</tr>
+</tbody></table>
+<p><strong>注意点</strong><br>a.count(*)少用  count(id) count(0)<br>b.算age数据多少  sum(age)<br>c.count(distinct id)  去重</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#求各个名称下的sum（age）</span><br><span class="line">select aname,sum(age) from  a  group by aname;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>aname</th>
+<th>sum(age)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wjw1</td>
+<td>47</td>
+</tr>
+<tr>
+<td>wjw2</td>
+<td>47</td>
+</tr>
+<tr>
+<td>wjw3</td>
+<td>26</td>
+</tr>
+</tbody></table>
+<p>#求age&gt;22的各个名称的年龄和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select t.aname,sum(t.age) from (select * from a where age &gt; 22) as t group by t.aname; &#x2F;&#x2F;子查询</span><br><span class="line"></span><br><span class="line">select aname,sum(age) from a where age&gt;22 group by aname;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>aname</th>
+<th>sum(age)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wjw1</td>
+<td>47</td>
+</tr>
+<tr>
+<td>wjw2</td>
+<td>25</td>
+</tr>
+<tr>
+<td>wjw3</td>
+<td>26</td>
+</tr>
+</tbody></table>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +515,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/02/23/sql%EF%BC%88%E4%BA%8C%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/02/01%20hadoop%20hdfs%E5%8D%95%E8%8A%82%E7%82%B9%E9%83%A8%E7%BD%B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadoop单节点的安装部署
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/22/sql%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL语句（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="sql（二）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +654,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

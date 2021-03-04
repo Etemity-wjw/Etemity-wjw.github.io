@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadoop的认知（三） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Hadoop的认知（三）1.MapReduce是什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop的认知（三）">
+<meta property="og:url" content="http://example.com/2017/03/08/04%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Hadoop的认知（三）1.MapReduce是什么">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:15:18.558Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,52 +219,76 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-04 Hadoop的认识（三）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop的认知（三）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/08/04%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-03-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hadoop的认知（三）"><a href="#Hadoop的认知（三）" class="headerlink" title="Hadoop的认知（三）"></a>Hadoop的认知（三）</h1><h2 id="1-MapReduce是什么"><a href="#1-MapReduce是什么" class="headerlink" title="1.MapReduce是什么"></a>1.MapReduce是什么</h2><span id="more"></span>
+<p>MapReduce<br>Map 映射     ？个     生产<br>Reduce 聚合  默认1个  生产</p>
+<h2 id="2-MR2-x-架构设计（MR-on-Yarn流程、mr提交job）"><a href="#2-MR2-x-架构设计（MR-on-Yarn流程、mr提交job）" class="headerlink" title="2.MR2.x 架构设计（MR on Yarn流程、mr提交job）"></a>2.MR2.x 架构设计（MR on Yarn流程、mr提交job）</h2><p>Yarn: RM NM</p>
+<p>RM:<br>   applications Manager 应用程序管理器<br>   resource scheduler   资源memory+cpu调度器</p>
+<p>红色框是什么？<br>    container 虚拟的概念 属于NM节点上，专门用来MR、spark等技术的最小单元<br>    map task<br>    reduce task<br>yarn运行程序、mr on yarn的流程：<br>2.1.用户向Yarn提交应用程序（job app application），jar文件、sql；<br>其中包裹ApplicationMaster程序、启动ApplicationMaster的命令等等<br>2.2.RM为该job分配第一个container，运行job的ApplicationMaster<br>2.3.App Master向applications Manager注册，这样就可以<br>在RM WEB界面查询这个job的运行状态<br>2.4.App Master采用轮询的方式通过RPC协议向RM申请和领取资源<br>2.5.一旦App Master拿到资源，就对应的与NM通信，要求启动任务<br>2.6.NM为任务设置好运行环境（jar包等），将任务启动命令写在一个脚本里。<br>并通过该脚本启动任务 task<br>2.7.各个task通过rpc协议向App Master汇报自己的状态和进度，以此让App Master随时掌握各个task的运行状态。从而在task运行失败重启任务。<br>2.8.App Master向applications Manager注销且关闭自己</p>
+<p><strong>分为两步:<br>启动App Master，申请资源；<br>运行任务，直到任务运行完成。</strong></p>
+<p>3.map task个数<br>Map 映射     默认2个（可修改）   生产<br>Reduce 聚合  默认1个  生产<br><a target="_blank" rel="noopener" href="http://blog.itpub.net/30089851/viewspace-2095837/">http://blog.itpub.net/30089851/viewspace-2095837/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 hadoop]$ hdfs dfs -ls &#x2F;wordount&#x2F;input</span><br><span class="line">19&#x2F;12&#x2F;08 21:17:28 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 1 items</span><br><span class="line">-rw-r--r--   1 wjw supergroup         86 2019-11-30 20:39 &#x2F;wordount&#x2F;input&#x2F;1.log</span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line">[wjw@hadoop001 hadoop]$ hadoop jar .&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar wordcount &#x2F;wordount&#x2F;input &#x2F;wordount&#x2F;output10</span><br><span class="line">19&#x2F;12&#x2F;08 21:18:04 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">19&#x2F;12&#x2F;08 21:18:05 INFO client.RMProxy: Connecting to ResourceManager at &#x2F;0.0.0.0:8032</span><br><span class="line">19&#x2F;12&#x2F;08 21:18:05 INFO input.FileInputFormat: Total input paths to process : 1</span><br><span class="line">19&#x2F;12&#x2F;08 21:18:06 INFO mapreduce.JobSubmitter: number of splits:1</span><br><span class="line"> Job Counters </span><br><span class="line">                Launched map tasks&#x3D;1</span><br><span class="line">                Launched reduce tasks&#x3D;1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 hadoop]$ hdfs dfs -put 2.log  &#x2F;wordount&#x2F;input </span><br><span class="line">19&#x2F;12&#x2F;08 21:21:22 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line">[wjw@hadoop001 hadoop]$ hdfs dfs -ls &#x2F;wordount&#x2F;input</span><br><span class="line">19&#x2F;12&#x2F;08 21:21:29 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   1 wjw supergroup         86 2019-11-30 20:39 &#x2F;wordount&#x2F;input&#x2F;1.log</span><br><span class="line">-rw-r--r--   1 wjw supergroup         20 2019-12-08 21:21 &#x2F;wordount&#x2F;input&#x2F;2.log</span><br><span class="line">[wjw@hadoop001 hadoop]$ </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[wjw@hadoop001 hadoop]$ hadoop jar .&#x2F;share&#x2F;hadoop&#x2F;mapreduce2&#x2F;hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar wordcount &#x2F;wordount&#x2F;input &#x2F;wordount&#x2F;output11</span><br><span class="line">19&#x2F;12&#x2F;08 21:21:58 INFO input.FileInputFormat: Total input paths to process : 2</span><br><span class="line">19&#x2F;12&#x2F;08 21:21:58 INFO mapreduce.JobSubmitter: number of splits:2</span><br><span class="line">   Job Counters </span><br><span class="line">                Launched map tasks&#x3D;2</span><br><span class="line">                Launched reduce tasks&#x3D;1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>map task:<br>1.log 86字节 1块<br>map为1份</p>
+<p>2.log 20字节 1块<br>map为2份</p>
+<p>认为: map task个数和文件的数量有关</p>
+<p>3.log 130M 2块<br>m : 4份?</p>
+<p>尽量在生产上控制一个文件的大小稍微小于一个blocksize<br>比如128M  文件为120M</p>
+<p>假如我们设定hdfs的块的大小是64mb，如果我们输入有三个文件，<br>大小分别是3mb、65mb和127mb，那么mapreduce会把3mb文件分为一个输入分片<br>（input split），65mb则是两个输入分片（input split）<br>而127mb也是两个输入分片（input split），<br>换句话说我们如果在map计算前做输入分片调整，<br>例如合并小文件，那么就会有5个map任务将执行，<br>而且每个map执行的数据大小不均，这个也是mapreduce优化计算的一个关键点。<br>？？？<br>应该在生产要考虑你的文件<br>是什么文件格式: txtfile orc parquet<br>      压缩格式: gzip snappy lzo</p>
+<p>hive: orc/parquet + bzip2<br>hbase: hfile + snappy<br><a target="_blank" rel="noopener" href="https://ruozedata.github.io/2018/04/18/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%EF%BC%8C%E4%BD%A0%E4%BB%AC%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F/">https://ruozedata.github.io/2018/04/18/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%EF%BC%8C%E4%BD%A0%E4%BB%AC%E7%9C%9F%E7%9A%84%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F/</a></p>
+<p>什么shuffle？<br>洗牌 学习和在职 生涯 做大数据<br>null 1kW</p>
+<p>null 1w</p>
+<p>1kw w</p>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +301,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/08/04%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/09/05%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E5%9B%9B%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadoop的认知（四）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/06/03%20Hadoop%E7%9A%84%E8%AE%A4%E7%9F%A5%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop的认知（二）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="04 Hadoop的认识（三）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +440,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

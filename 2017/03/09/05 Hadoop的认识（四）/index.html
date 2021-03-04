@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Hadoop的认知（四） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Hadoop的认知（四）1.Container">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop的认知（四）">
+<meta property="og:url" content="http://example.com/2017/03/09/05%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Hadoop的认知（四）1.Container">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:15:38.121Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,52 +219,94 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-05 Hadoop的认识（四）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop的认知（四）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/09/05%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-03-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hadoop的认知（四）"><a href="#Hadoop的认知（四）" class="headerlink" title="Hadoop的认知（四）"></a>Hadoop的认知（四）</h1><h2 id="1-Container"><a href="#1-Container" class="headerlink" title="1.Container"></a>1.Container</h2><span id="more"></span>
+<p>容器 虚拟化的  维度 memory+vcore<br>运行task任务</p>
+<p>生产如何调优Container参数？<br>假设128G 16物理core</p>
+<h3 id="1-1装完CentOS，消耗内存1G"><a href="#1-1装完CentOS，消耗内存1G" class="headerlink" title="1.1装完CentOS，消耗内存1G"></a>1.1装完CentOS，消耗内存1G</h3><h3 id="1-2系统预览15-20-内存-包含1-1-，"><a href="#1-2系统预览15-20-内存-包含1-1-，" class="headerlink" title="1.2系统预览15%-20%内存(包含1.1)，"></a>1.2系统预览15%-20%内存(包含1.1)，</h3><p>以防全部使用导致系统夯住 和 oom机制事件，或者给未来部署组件预览点空间<br>预留128*20%=25.6G ==26G</p>
+<h3 id="1-3假设只有DN-NM节点，余下内存-128-26-102g"><a href="#1-3假设只有DN-NM节点，余下内存-128-26-102g" class="headerlink" title="1.3假设只有DN NM节点，余下内存 128-26=102g"></a>1.3假设只有DN NM节点，余下内存 128-26=102g</h3><h4 id="1-3-1"><a href="#1-3-1" class="headerlink" title="1.3.1"></a>1.3.1</h4><p>DN=2G<br>NM=4G<br>102-2-4=96G 用于计算</p>
+<h4 id="1-3-2-container内存"><a href="#1-3-2-container内存" class="headerlink" title="1.3.2 container内存"></a>1.3.2 container内存</h4><p>yarn.nodemanager.resource.memory-mb     96G<br>yarn.scheduler.minimum-allocation-mb    1G   极限情况下，只有96个container 内存1G<br>yarn.scheduler.maximum-allocation-mb    96G  极限情况下，只有1个container 内存96G</p>
+<p>container的内存会自动增加，默认1g递增<br>container:1-96个</p>
+<h4 id="1-3-3-container虚拟核"><a href="#1-3-3-container虚拟核" class="headerlink" title="1.3.3 container虚拟核"></a>1.3.3 container虚拟核</h4><p>物理核:虚拟核 =1:2  32vcore<br>yarn.nodemanager.resource.pcores-vcores-multiplier 2</p>
+<p>yarn.nodemanager.resource.cpu-vcores            32<br>yarn.scheduler.minimum-allocation-vcores    1  极限情况下，只有32个container<br>yarn.scheduler.maximum-allocation-vcores    32 极限情况下，只有1个container<br>container:1-32个</p>
+<h4 id="1-3-4-官方建议"><a href="#1-3-4-官方建议" class="headerlink" title="1.3.4 官方建议"></a>1.3.4 官方建议</h4><p>cloudera公司推荐，一个container的vcore最好不要超过5，那么我们设置4<br>yarn.scheduler.maximum-allocation-vcores 4   极限情况下，只有8个container</p>
+<h4 id="1-3-5-综合memory-vcore"><a href="#1-3-5-综合memory-vcore" class="headerlink" title="1.3.5 综合memory+vcore"></a>1.3.5 综合memory+vcore</h4><p>确定 vcore=4 container 8个</p>
+<p>yarn.nodemanager.resource.memory-mb     96G<br>yarn.scheduler.minimum-allocation-mb    1G<br>yarn.scheduler.maximum-allocation-mb    12G 极限container 8个<br>当然当spark计算时内存不够大，这个参数肯定要调大，<br>那么这种理想化的设置个数必然要打破，以memory为主</p>
+<p>yarn.nodemanager.resource.cpu-vcores            32<br>yarn.scheduler.minimum-allocation-vcores    1<br>yarn.scheduler.maximum-allocation-vcores    4 极限container 8个</p>
+<p>8个container 12G 4vcore</p>
+<p>yarn.nodemanager.resource.memory-mb     96G<br>yarn.scheduler.minimum-allocation-mb    1G<br>yarn.scheduler.maximum-allocation-mb    8G<br>12container  12*2=24</p>
+<p>yarn.nodemanager.resource.cpu-vcores            32<br>yarn.scheduler.minimum-allocation-vcores    1<br>yarn.scheduler.maximum-allocation-vcores    2<br>16 container*8g</p>
+<h3 id="1-4-假如-256G内存-56core，请问参数如何设置"><a href="#1-4-假如-256G内存-56core，请问参数如何设置" class="headerlink" title="1.4 假如 256G内存 56core，请问参数如何设置?"></a>1.4 假如 256G内存 56core，请问参数如何设置?</h3><h3 id="1-5-假如该节点还有组件，比如hbase-regionserver进程，那么该如何设置？"><a href="#1-5-假如该节点还有组件，比如hbase-regionserver进程，那么该如何设置？" class="headerlink" title="1.5 假如该节点还有组件，比如hbase regionserver进程，那么该如何设置？"></a>1.5 假如该节点还有组件，比如hbase regionserver进程，那么该如何设置？</h3><p>hbase regionserver = 30G<br>102-2-4-30=66G</p>
+<p>2.vcore<br>yarn自己引入的<br>设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。<br>比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core<br>来弥补这种差异。</p>
+<p>第一台机器 强悍 pcore: vcore=1:2<br>第二台机器 不强悍 pcore: vcore=1:1<br>xml配置</p>
+<p>所有节点  pcore: vcore=1:2</p>
+<p>3.再回顾架构<br>4.调度器<br>FIFO 先进先出<br>Capacity 计算<br>有一个专门的队列来运行小任务，<br>但是为了小任务专门设置一个队列预先占用一定的集群资源。<br>这会导致大任务的执行时间落后FIFO的调度时间</p>
+<p>Fair 公平</p>
+<p>apache 默认计算:<br>yarn.resourcemanager.scheduler.class<br>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</p>
+<p>CDH 默认公平:<br>web Fair</p>
+<p>动态资源池 放置规则 CDH fair</p>
+<p>5.常用命令<br>yarn jar<br>hadoop jar</p>
+<p>yarn application -kill <Application ID></p>
+<p>原始的 128M<br>f1 130M 2task 128M 00:55 2M 00:03<br>f2 14M  1task 14M 00:05<br>f3 20M  1task 20M 00:09</p>
+<p>job 4个task 时间 是 128M的map task控制的  总的55秒</p>
+<p>f1 130M 2task<br>f2 14M  1task<br>f3 20M  1task </p>
+<p>f1 130M 2task<br>f2 14M  1task<br>f3 20M  1task </p>
+<p>164M/55M<br>f1 55m 1task<br>f2 55m 1task<br>f3 55m 1task</p>
+<p>=======================================<br>1.梳理yarn资源调优参数（*****）<br>2.调度器整理三种 区别是什么，CDH默认是什么</p>
+<p>Linux<br>早课 群文件看看<br>cd mkdir rm vi ls chown chmod tar<br>ps netstat </p>
+<p>MySQL<br>建表规范<br>彩蛋视频</p>
+<p>HDFS<br>架构设计 读写流程 副本放置策略 SNN机制<br>hadoop fs命令</p>
+<p>MR<br>wordcount记住<br>提交job yarn流程图 </p>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +319,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/09/05%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E5%9B%9B%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/12/Hive01/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hive安装与使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/08/04%20Hadoop%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop的认知（三）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="05 Hadoop的认识（四）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +458,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

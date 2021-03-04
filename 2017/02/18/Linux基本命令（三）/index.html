@@ -6,17 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Linux基本命令（三） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Linux基本命令（三）1.用户和用户组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基本命令（三）">
+<meta property="og:url" content="http://example.com/2017/02/18/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Linux基本命令（三）1.用户和用户组">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T10:58:46.723Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,181 +219,207 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux基本命令（三）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Linux基本命令（三）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/02/18/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-02-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux基本命令（三）"><a href="#Linux基本命令（三）" class="headerlink" title="Linux基本命令（三）"></a>Linux基本命令（三）</h1><h2 id="1-用户和用户组"><a href="#1-用户和用户组" class="headerlink" title="1.用户和用户组"></a>1.用户和用户组</h2><span id="more"></span>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# ll /usr/sbin/user*</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">118232</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/useradd</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root  <span class="number">80400</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/userdel</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">113856</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/usermod</span><br><span class="line">-rwsr-xr-x. <span class="number">1</span> root root  <span class="number">11376</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/usernetctl</span><br><span class="line">[root@hadoop001 ~]# ll /usr/sbin/group*</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">65520</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/groupadd</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">57080</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/groupdel</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">57120</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/groupmems</span><br><span class="line">-rwxr-x---. <span class="number">1</span> root root <span class="number">76432</span> Oct <span class="number">31</span>  <span class="number">2016</span> /usr/sbin/groupmod</span><br><span class="line">[root@hadoop001 ~]# useradd spark  //创建一个普通用户</span><br><span class="line">[root@hadoop001 ~]# id spark //</span><br><span class="line">uid=<span class="number">1003</span>(spark) gid=<span class="number">1003</span>(spark) groups=<span class="number">1003</span>(spark)</span><br><span class="line">[root@hadoop001 ~]# </span><br><span class="line"><span class="comment">//创建一个普通用户，默认创建这个名称的用户组spark,</span></span><br><span class="line"><span class="comment">//且设置这个用户主组为saprk，且创建/home/saprk.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# cat /etc/passwd  //查看用户</span><br><span class="line">root:x:<span class="number">0</span>:<span class="number">0</span>:root:<span class="regexp">/root:/</span>bin/bash</span><br><span class="line">jepson:x:<span class="number">1000</span>:<span class="number">1000</span>::<span class="regexp">/home/</span>jepson:<span class="regexp">/bin/</span>bash</span><br><span class="line">rouze:x:<span class="number">1001</span>:<span class="number">1001</span>::<span class="regexp">/home/</span>rouze:<span class="regexp">/bin/</span>bash</span><br><span class="line">hadoop:x:<span class="number">1002</span>:<span class="number">1002</span>::<span class="regexp">/home/</span>hadoop:<span class="regexp">/bin/</span>bash</span><br><span class="line">spark:x:<span class="number">1003</span>:<span class="number">1003</span>::<span class="regexp">/home/</span>spark:<span class="regexp">/bin/</span>bash</span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# cat /etc/group   //查看用户组</span><br><span class="line">root:x:<span class="number">0</span>:</span><br><span class="line">jepson:x:<span class="number">1000</span>:</span><br><span class="line">rouze:x:<span class="number">1001</span>:</span><br><span class="line">hadoop:x:<span class="number">1002</span>:</span><br><span class="line">spark:x:<span class="number">1003</span>:</span><br><span class="line">[root@hadoop001 ~]# cd /home/</span><br><span class="line">[root@hadoop001 home]# ll</span><br><span class="line">total <span class="number">0</span></span><br><span class="line">drwx------. <span class="number">10</span> hadoop hadoop <span class="number">170</span> Nov <span class="number">18</span> <span class="number">17</span>:<span class="number">00</span> hadoop</span><br><span class="line">drwx------.  <span class="number">5</span> jepson jepson <span class="number">164</span> Nov <span class="number">18</span> <span class="number">17</span>:<span class="number">52</span> jepson</span><br><span class="line">drwx------.  <span class="number">4</span> rouze  rouze   <span class="number">95</span> Nov  <span class="number">5</span> <span class="number">16</span>:<span class="number">08</span> rouze</span><br><span class="line">drwx------.  <span class="number">2</span> spark  spark   <span class="number">62</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> spark</span><br><span class="line"><span class="comment">//权限        所属用户 所属用户组       时间  </span></span><br><span class="line"></span><br><span class="line">[root@hadoop001 home]# userdel spark  //删除spark用户与用户组</span><br><span class="line">[root@hadoop001 home]# cat /etc/passwd | grep spark</span><br><span class="line">[root@hadoop001 home]# cat /etc/group | grep spark</span><br><span class="line"><span class="comment">//因为spark该组只有spark用户，当这个用户删除时，组会校验就他自己，会自动删除</span></span><br><span class="line">[root@hadoop001 home]# ll</span><br><span class="line">total <span class="number">0</span></span><br><span class="line">drwx------. <span class="number">10</span> hadoop hadoop <span class="number">170</span> Nov <span class="number">18</span> <span class="number">17</span>:<span class="number">00</span> hadoop</span><br><span class="line">drwx------.  <span class="number">5</span> jepson jepson <span class="number">164</span> Nov <span class="number">18</span> <span class="number">17</span>:<span class="number">52</span> jepson</span><br><span class="line">drwx------.  <span class="number">4</span> rouze  rouze   <span class="number">95</span> Nov  <span class="number">5</span> <span class="number">16</span>:<span class="number">08</span> rouze</span><br><span class="line">drwx------.  <span class="number">2</span>   <span class="number">1003</span>   <span class="number">1003</span>  <span class="number">62</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> spark</span><br><span class="line"></span><br><span class="line">[root@hadoop001 home]# useradd spark  //重新创建spark用户</span><br><span class="line">useradd: warning: the home directory already exists.</span><br><span class="line">Not copying any file <span class="keyword">from</span> skel directory into it.</span><br><span class="line">Creating mailbox file: File exists</span><br><span class="line">[root@hadoop001 home]# cat /etc/passwd | grep spark</span><br><span class="line">spark:x:<span class="number">1003</span>:<span class="number">1003</span>::<span class="regexp">/home/</span>spark:<span class="regexp">/bin/</span>bash</span><br><span class="line">[root@hadoop001 home]# </span><br><span class="line">[root@hadoop001 home]# cat /etc/group | grep spark</span><br><span class="line">spark:x:<span class="number">1003</span>:</span><br><span class="line"></span><br><span class="line"><span class="comment">//模拟用户丢失</span></span><br><span class="line">[root@hadoop001 home]# cd spark</span><br><span class="line">[root@hadoop001 spark]# ll -a</span><br><span class="line">total <span class="number">12</span></span><br><span class="line">drwx------. <span class="number">2</span> spark spark  <span class="number">62</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> .</span><br><span class="line">drwxr-xr-x. <span class="number">6</span> root  root   <span class="number">60</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> ..</span><br><span class="line">-rw-r--r--. <span class="number">1</span> spark spark  <span class="number">18</span> Oct <span class="number">31</span>  <span class="number">2018</span> .bash_logout</span><br><span class="line">-rw-r--r--. <span class="number">1</span> spark spark <span class="number">193</span> Oct <span class="number">31</span>  <span class="number">2018</span> .bash_profile</span><br><span class="line">-rw-r--r--. <span class="number">1</span> spark spark <span class="number">231</span> Oct <span class="number">31</span>  <span class="number">2018</span> .bashrc</span><br><span class="line">[root@hadoop001 spark]# rm -f .bash*  //删除隐藏配置文件</span><br><span class="line"><span class="comment">//进行修正</span></span><br><span class="line">[root@hadoop001 spark]# cp /home/hadoop/.bash* ./</span><br><span class="line">[root@hadoop001 spark]# ll -a</span><br><span class="line">total <span class="number">12</span></span><br><span class="line">drwx------. <span class="number">2</span> spark spark  <span class="number">62</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .</span><br><span class="line">drwxr-xr-x. <span class="number">6</span> root  root   <span class="number">60</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> ..</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root  root   <span class="number">18</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .bash_logout</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root  root  <span class="number">193</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .bash_profile</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root  root  <span class="number">231</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .bashrc</span><br><span class="line">[root@hadoop001 spark]# chown spark:spark .bash*  //修改配置文件的用户与用户组</span><br><span class="line">[root@hadoop001 spark]# ll -a</span><br><span class="line">total <span class="number">12</span></span><br><span class="line">drwx------. <span class="number">2</span> spark spark  <span class="number">62</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .</span><br><span class="line">drwxr-xr-x. <span class="number">6</span> root  root   <span class="number">60</span> Nov <span class="number">18</span> <span class="number">19</span>:<span class="number">53</span> ..</span><br><span class="line">-rw-r--r--. <span class="number">1</span> spark spark  <span class="number">18</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .bash_logout</span><br><span class="line">-rw-r--r--. <span class="number">1</span> spark spark <span class="number">193</span> Nov <span class="number">18</span> <span class="number">23</span>:<span class="number">04</span> .bash_profile</span><br><span class="line">[root@hadoop001 spark]# </span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# su - spark //测试用户修正前情况</span><br><span class="line">-bash-<span class="number">4.2</span>$ </span><br><span class="line">-bash-<span class="number">4.2</span>$ </span><br><span class="line">-bash-<span class="number">4.2</span>$ su - root</span><br><span class="line">Password: </span><br><span class="line">Last login: Mon Nov <span class="number">18</span> <span class="number">15</span>:<span class="number">49</span>:<span class="number">42</span> CST <span class="number">2019</span> <span class="keyword">from</span> <span class="number">192.168</span><span class="number">.110</span><span class="number">.1</span> on pts/<span class="number">1</span></span><br><span class="line">[root@hadoop001 ~]# su - spark //测试用户修正后情况</span><br><span class="line">Last login: Mon Nov <span class="number">18</span> <span class="number">22</span>:<span class="number">53</span>:<span class="number">45</span> CST <span class="number">2019</span> on pts/<span class="number">0</span></span><br><span class="line">[spark@hadoop001 ~]$ </span><br><span class="line"></span><br><span class="line"><span class="comment">//添加spark用户到另外一个组</span></span><br><span class="line">[root@hadoop001 spark]# groupadd bigdata  //增加bigdata组</span><br><span class="line">[root@hadoop001 spark]# cat /etc/group |grep bigdata</span><br><span class="line">bigdata:x:<span class="number">1004</span>:</span><br><span class="line">[root@hadoop001 spark]# usermod -a -G bigdata spark //spark用户到另外bigdata组 </span><br><span class="line">[root@hadoop001 spark]# id spark</span><br><span class="line">uid=<span class="number">1003</span>(spark) gid=<span class="number">1003</span>(spark) groups=<span class="number">1003</span>(spark),<span class="number">1004</span>(bigdata)</span><br><span class="line">[root@hadoop001 spark]# </span><br><span class="line"><span class="comment">//修改bigdata为spark的主组</span></span><br><span class="line">[root@hadoop001 ~]# usermod --gid bigdata spark  //等同于 -g</span><br><span class="line">[root@hadoop001 ~]# id spark</span><br><span class="line">uid=<span class="number">1003</span>(spark) gid=<span class="number">1004</span>(bigdata) groups=<span class="number">1004</span>(bigdata)</span><br><span class="line">[root@hadoop001 ~]# usermod -a -G spark spark </span><br><span class="line">[root@hadoop001 ~]# id spark</span><br><span class="line">uid=<span class="number">1003</span>(spark) gid=<span class="number">1004</span>(bigdata) groups=<span class="number">1004</span>(bigdata),<span class="number">1003</span>(spark)</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="2-设置密码"><a href="#2-设置密码" class="headerlink" title="2.设置密码"></a>2.设置密码</h2><p>给用户spark设置密码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# passwd spark</span><br><span class="line">Changing password <span class="keyword">for</span> user spark.</span><br><span class="line">New password: </span><br><span class="line">BAD PASSWORD: The password is shorter than <span class="number">8</span> characters</span><br><span class="line">Retype <span class="keyword">new</span> password: </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+<h2 id="3-切换用户"><a href="#3-切换用户" class="headerlink" title="3.切换用户"></a>3.切换用户</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# su - spark //代表切换该用户的家目录，且执行环境变量文件</span><br><span class="line">Last login: Tue Nov <span class="number">19</span> <span class="number">21</span>:<span class="number">17</span>:<span class="number">39</span> CST <span class="number">2019</span> on pts/<span class="number">0</span></span><br><span class="line">[spark@hadoop001 ~]$ </span><br><span class="line">[root@hadoop001 ~]# su spark  //仍处在上个用户的家目录</span><br><span class="line">[spark@hadoop001 root]$ </span><br></pre></td></tr></table></figure>
+<p><strong>.bash_profile文件 su spark 不会执行，su - spark 都执行<br>.bashrc文件       su spark 执行    ，su - spark 都执行</strong></p>
+<h2 id="4-普通用户获取root的最大权限"><a href="#4-普通用户获取root的最大权限" class="headerlink" title="4.普通用户获取root的最大权限"></a>4.普通用户获取root的最大权限</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# vi /etc/sudoers</span><br><span class="line">spark   ALL=(root)      NOPASSWD:ALL  <span class="comment">//增加spark的root权限</span></span><br><span class="line">[root@hadoop001 ~]# su spark </span><br><span class="line">[spark@hadoop001 root]$ ll</span><br><span class="line">ls: cannot open directory .: Permission denied</span><br><span class="line">[spark@hadoop001 root]$ sudo ll</span><br><span class="line">sudo: ll: command not found</span><br><span class="line">[spark@hadoop001 root]$ sudo ls -l  <span class="comment">//验证效果</span></span><br><span class="line">total <span class="number">4</span></span><br><span class="line">-rw-------. <span class="number">1</span> root root <span class="number">1258</span> Nov  <span class="number">3</span> <span class="number">20</span>:<span class="number">56</span> anaconda-ks.cfg</span><br><span class="line">[spark@hadoop001 root]$ </span><br></pre></td></tr></table></figure>
+<h2 id="5-etc-passwd"><a href="#5-etc-passwd" class="headerlink" title="5./etc/passwd"></a>5./etc/passwd</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# vi /etc/passwd</span><br><span class="line">spark:x:<span class="number">1003</span>:<span class="number">1004</span>::<span class="regexp">/home/</span>spark:<span class="regexp">/bin/</span><span class="literal">false</span></span><br><span class="line">[root@hadoop001 ~]# su - spark</span><br><span class="line">Last login: Tue Nov <span class="number">19</span> <span class="number">21</span>:<span class="number">32</span>:<span class="number">29</span> CST <span class="number">2019</span> on pts/<span class="number">1</span></span><br><span class="line">[root@hadoop001 ~]# </span><br><span class="line"></span><br><span class="line">[root@hadoop001 ~]# vi /etc/passwd</span><br><span class="line">spark:x:<span class="number">1003</span>:<span class="number">1004</span>::<span class="regexp">/home/</span>spark:<span class="regexp">/sbin/</span>nologin</span><br><span class="line">[root@hadoop001 ~]# su - spark</span><br><span class="line">Last login: Tue Nov <span class="number">19</span> <span class="number">21</span>:<span class="number">41</span>:<span class="number">59</span> CST <span class="number">2019</span> on pts/<span class="number">1</span></span><br><span class="line">This account is currently not available.</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+<p><strong>/etc/passwd文件<br>CDH 很多的组件<br>hdfs组件 hdfs用户<br>     su - hdfs<br>     对应修改为 /bin/bash<br>hbase组件 hbase用户<br>    su - hbase<br>yarn组件  yarn用户</strong></p>
+<h2 id="6-权限"><a href="#6-权限" class="headerlink" title="6.权限"></a>6.权限</h2><p><strong>第一个字母: d文件夹 -文件 l连接<br>rwx rwx rwx<br>r: read  4<br>w: write 2<br>x: 执行  1<br>-: 没权限 0</strong></p>
+<p>chmod -R 777 文件夹/文件路径<br>chown -R 用户:用户组 文件夹/文件路径</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 jepson]# ll</span><br><span class="line">total <span class="number">8</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root   <span class="number">6</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">06</span> <span class="number">3</span></span><br><span class="line"><span class="comment">//rwx 第一组 7 代表文件或文件夹的用户root，读写执行</span></span><br><span class="line"><span class="comment">//r-x  第二组 5 代表文件或文件夹的用户组root，读执行</span></span><br><span class="line"><span class="comment">//r-x  第三组 5 代表其他组的所属用户对这个文件或文件夹的权限，读执行</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root  <span class="number">27</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">24</span> a</span><br><span class="line">drwxr-xr-x. <span class="number">3</span> root root  <span class="number">15</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">01</span> b</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">147</span> Nov <span class="number">18</span> <span class="number">14</span>:<span class="number">06</span> error.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">14</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">23</span> hadoop.log002</span><br><span class="line">[root@hadoop001 jepson]# chmod -R 777 3</span><br><span class="line">[root@hadoop001 jepson]# ll</span><br><span class="line">total <span class="number">8</span></span><br><span class="line">drwxrwxrwx. <span class="number">2</span> root root   <span class="number">6</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">06</span> <span class="number">3</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root  <span class="number">27</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">24</span> a</span><br><span class="line">drwxr-xr-x. <span class="number">3</span> root root  <span class="number">15</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">01</span> b</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">147</span> Nov <span class="number">18</span> <span class="number">14</span>:<span class="number">06</span> error.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">14</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">23</span> hadoop.log002</span><br><span class="line">[root@hadoop001 jepson]# </span><br></pre></td></tr></table></figure>
+<p><strong>案例：</strong><br>/tmp 任意的用户都可以访问<br>drwxrwxrwt.  10 root root  186 Nov 19 21:37 tmp</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 tmp]# su - jepson</span><br><span class="line">Last login: Tue Nov  <span class="number">5</span> <span class="number">17</span>:<span class="number">16</span>:<span class="number">57</span> CST <span class="number">2019</span> on pts/<span class="number">0</span></span><br><span class="line">[jepson@hadoop001 ~]$ cd /tmp/</span><br><span class="line">[jepson@hadoop001 tmp]$ ll</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">14</span> Nov <span class="number">19</span> <span class="number">22</span>:<span class="number">40</span> baidu.log</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root  <span class="number">6</span> Nov <span class="number">18</span> <span class="number">15</span>:<span class="number">57</span> hsperfdata_root</span><br><span class="line">drwx------. <span class="number">2</span> root root  <span class="number">6</span> Nov <span class="number">18</span> <span class="number">10</span>:<span class="number">16</span> vmware-root_9115-<span class="number">4121403749</span></span><br><span class="line">drwx------. <span class="number">2</span> root root  <span class="number">6</span> Nov <span class="number">19</span> <span class="number">20</span>:<span class="number">58</span> vmware-root_9132-<span class="number">3092397204</span></span><br><span class="line"><span class="comment">//第一次编辑</span></span><br><span class="line">[jepson@hadoop001 tmp]$ vi baidu.log </span><br><span class="line"><span class="comment">//E45: &#x27;readonly&#x27; option is set (add ! to override)  无法保存 </span></span><br><span class="line"><span class="comment">//第二次编辑</span></span><br><span class="line">[root@hadoop001 tmp]# chmod 646 baidu.log </span><br><span class="line">[jepson@hadoop001 tmp]$ vi baidu.log <span class="comment">//成功</span></span><br><span class="line"></span><br><span class="line">[root@hadoop001 tmp]# chmod 664 baidu.log //先撤回该文件的其他组的 写权限 </span><br><span class="line">[root@hadoop001 tmp]# usermod -a -G root jepson //将jepson用户添加到root用户组</span><br><span class="line">[root@hadoop001 tmp] chmod <span class="number">664</span> rz.log <span class="comment">//修改文件的第二组的权限：r --&gt; rw权限</span></span><br><span class="line">[root@hadoop001 ~]# su - jepson</span><br><span class="line">[jepson@hadoop001 ~]$  cd /tmp</span><br><span class="line">[jepson@hadoop001 tmp]$ vi baidu.log  <span class="comment">//编辑是成功的</span></span><br></pre></td></tr></table></figure>
+<h2 id="7-查看大小"><a href="#7-查看大小" class="headerlink" title="7.查看大小"></a>7.查看大小</h2><p><strong>文件:<br>ll<br>du -sh xxx.log<br>文件夹:<br>du -sh yyy</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 software]# ll</span><br><span class="line">total <span class="number">699652</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root   <span class="number">8491533</span> Aug <span class="number">13</span> <span class="number">20</span>:<span class="number">38</span> apache-maven-<span class="number">3.3</span><span class="number">.9</span>-bin.tar.gz</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root   <span class="number">8842660</span> Aug <span class="number">16</span> <span class="number">16</span>:<span class="number">00</span> apache-maven-<span class="number">3.5</span><span class="number">.4</span>-bin.tar.gz</span><br><span class="line">[root@hadoop001 software]# du -sh apache-maven-3.3.9-bin.tar.gz </span><br><span class="line"><span class="number">8.</span>2M	apache-maven-<span class="number">3.3</span><span class="number">.9</span>-bin.tar.gz</span><br><span class="line">[root@hadoop001 software]# cd ..</span><br><span class="line">[root@hadoop001 hadoop]# ll</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> app</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> data</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> lib</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> maven_repos</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> script</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root <span class="number">4096</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">52</span> software</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> source</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root    <span class="number">6</span> Nov <span class="number">18</span> <span class="number">12</span>:<span class="number">49</span> tmp</span><br><span class="line">[root@hadoop001 hadoop]# du -sh software/</span><br><span class="line">684M	software/</span><br><span class="line">[root@hadoop001 hadoop]# </span><br></pre></td></tr></table></figure>
+<h2 id="8-搜索-find"><a href="#8-搜索-find" class="headerlink" title="8.搜索 find"></a>8.搜索 find</h2><p><strong>history 历史记录</strong><br><strong>ps -ef 查看进程</strong><br><strong>top 系统情况</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 spark]# mkdir xxxsparkxxx</span><br><span class="line">[root@hadoop001 spark]# mkdir spark</span><br><span class="line">[root@hadoop001 spark]# ll</span><br><span class="line">total <span class="number">0</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root <span class="number">6</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">04</span> spark</span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root <span class="number">6</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">04</span> xxxsparkxxx</span><br><span class="line">[root@hadoop001 spark]# cd ~</span><br><span class="line">[root@hadoop001 ~]# find / -name &#x27;*spark*&#x27;   //* 代表模糊匹配</span><br><span class="line">/home/hadoop/software/spark-<span class="number">2.4</span><span class="number">.3</span>.tar.gz</span><br><span class="line">/home/spark</span><br><span class="line">/home/spark/xxxsparkxxx</span><br><span class="line">/home/spark/spark</span><br><span class="line">/<span class="keyword">var</span>/spool/mail/spark</span><br><span class="line">[root@hadoop001 ~]# find /home/spark -name &#x27;*spark*&#x27;  //* 代表模糊匹配</span><br><span class="line">/home/spark</span><br><span class="line">/home/spark/xxxsparkxxx</span><br><span class="line">/home/spark/spark</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+
+
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
+        			<a href="/categories/运维//" class="article-tag-list-link color3">运维</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/02/18/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%B8%89%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/02/19/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E5%9B%9B%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux基本命令（四）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/14/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux基本命令（二）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="Linux基本命令（三）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +442,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

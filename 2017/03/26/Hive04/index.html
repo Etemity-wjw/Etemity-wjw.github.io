@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>HIVE03 | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="HIVE031 SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HIVE03">
+<meta property="og:url" content="http://example.com/2017/03/26/Hive04/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="HIVE031 SQL">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:37:00.840Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Hive">
+<meta property="article:tag" content="Sqoop">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
@@ -216,52 +220,243 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hive04" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      HIVE03
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/26/Hive04/" class="archive-article-date">
+  	<time datetime="2017-03-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="HIVE03"><a href="#HIVE03" class="headerlink" title="HIVE03"></a>HIVE03</h1><h2 id="1-SQL"><a href="#1-SQL" class="headerlink" title="1 SQL"></a>1 SQL</h2><span id="more"></span>
+<h3 id="1-1-排序问题"><a href="#1-1-排序问题" class="headerlink" title="1.1 排序问题"></a>1.1 排序问题</h3><p><strong>order by</strong>（慎用）<br>语法：order by col1 col2 asc/desc<br>全局排序：只能有一个reduce作业来完成，多个reduce无法保证全局顺序。<br>关于order by参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1、hive.mapred.mode</span><br><span class="line">在2.x以前默认非严格的，以后为严格模式</span><br><span class="line">hive (wjwdata_hive)&gt; set hive.mapred.mode;</span><br><span class="line">hive.mapred.mode&#x3D;nonstrict &#x2F;&#x2F;非严格</span><br><span class="line">hive (wjwdata_hive)&gt; set hive.mapred.mode&#x3D;strict;&#x2F;&#x2F;设置为严格模式</span><br><span class="line">strict 模式下：</span><br><span class="line">普通表：order by + limit</span><br><span class="line">分区表：</span><br><span class="line">order by + limit where partition column </span><br></pre></td></tr></table></figure>
+<p><strong>sort by</strong></p>
+<ul>
+<li>能保证每个分区有序</li>
+<li>你有几个reduce作业，每个reduce输出的结果是有序</li>
+<li>不受strict影响</li>
+<li>col可以是多个</li>
+<li>数值类型==&gt;数字</li>
+<li>字符串类型==&gt;字典<br>补充：MR中多少个reduce作业就对应多少个输出文件<pre><code>    Spark中多少个task就对应多少个输出文件
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mapred.reduce.tasks</span><br><span class="line">设置reduce数量</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>distribute by</strong></p>
+<ul>
+<li><ul>
+<li>col  根据指定的字段把数据分发到不同的reduce上去</li>
+</ul>
+</li>
+<li>相当于MapReduce中的Partitioner</li>
+<li>通常与sort by连用</li>
+<li>数据分发的效果</li>
+</ul>
+<p><strong>Cluster By</strong> </p>
+<ul>
+<li>is a short-cut for both Distribute By and Sort By.（等于两个语法 Distribute By + Sort By连用）</li>
+<li>分发与排序</li>
+</ul>
+<p><strong>by总结</strong></p>
+<ul>
+<li>order by 全局  一个reduce 大数据量下 效率低</li>
+<li>sort by 每个reduce内有序，不能保证全局有序</li>
+<li>distribute by 是按照指定字段进行数据分发</li>
+<li>常与sort by连用，确保每个reduce内有序</li>
+<li>cluster by = distribute by + sort by</li>
+</ul>
+<h2 id="2、Sqoop的使用"><a href="#2、Sqoop的使用" class="headerlink" title="2、Sqoop的使用"></a>2、Sqoop的使用</h2><h3 id="2-1、Sqoop的产生背景、简介"><a href="#2-1、Sqoop的产生背景、简介" class="headerlink" title="2.1、Sqoop的产生背景、简介"></a>2.1、Sqoop的产生背景、简介</h3><p><strong>场景：</strong><br>1）、数据存储在MySQL中，你想使用Hive进行处理<br>2）、使用Hive统计分析好了，数据还在Hive中，如何导出到MySQL中：  </p>
+<ul>
+<li> 最终是通过报表可视化展示的，结果如何对接到报表中：</li>
+<li>（1）、HiveServer2 </li>
+<li>（2）、Hive的统计结果导出到RDBMS中，报表数据直接对接RDBMS中，必备的两大场景</li>
+</ul>
+<p>解决方案：MapReduce（太过繁杂）  </p>
+<ul>
+<li> 抽象成常用的工具</li>
+</ul>
+<p>Sqoop是一个数据导入导出工具：<br>类似Hive访问MySQL在$HIVE_HOME/cong下的hive-site.xml中的信息一样：<br>RDBMS需要如下链接信息：url driver db table user password（必要信息）<br>链接到hdfs需要：path<br>链接到Hive需要：database table partition</p>
+<p>–&gt; 引出了Sqoop这个框架：sqoop.apache,org</p>
+<p>sqoop：sql to hadoop<br>hue：一个可视化的框架，在上面写SQL，结果可以采用报表的方式出来：在CDH一配置结果就都出来了。</p>
+<p>生产集群中看公司，先通过跳板机在再链接到服务器上去，Dbeaver能否链接到生产服务器，可以</p>
+<p><strong>Sqoop简介：</strong></p>
+<ul>
+<li>Apache Sqoop™ is a tool designed for efficiently transferring bulk data between Apache Hadoop and structured datastores such as relational databases.</li>
+<li>sqoop是一个工具用来高效传输数据的工具，是在hadoop和结构化数据库之间，比如RDBMS和Hadoop进行相互操作的一个工具。</li>
+</ul>
+<p>RDBMS &lt;==&gt;Hadoop，同比的也可以把数据导到Hbase、Hive中去。</p>
+<p><strong>两大版本：</strong></p>
+<ul>
+<li>sqoop1.x：sqoop1 ***（70%左右公司都是使用这个的）  </li>
+<li>sqoop1.99.x：sqoop2（用起来很麻烦）</li>
+<li>我们使用的是sqoop1，两个框架是风马牛不相及的。</li>
+</ul>
+<p><strong>职责：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">把数据从RDBMS和Hadoop之间记性导入导出操作，底层就是使用MapReduce来实现的。</span><br><span class="line">Sqoop只有Map，它不需要Reduce。</span><br></pre></td></tr></table></figure>
+<p>Sqoop的导入：基于Hadoop作为参考点、基准往内<br>导入: import<br>RDBMS &lt;==&gt;Hadoop</p>
+<p>Sqoop的导出：从Hadoop作为出发点往外导<br>导出: export<br>Hadoop &lt;==&gt; RDBMS  </p>
+<h1 id="3-2、Sqoop的安装部署"><a href="#3-2、Sqoop的安装部署" class="headerlink" title="3.2、Sqoop的安装部署"></a>3.2、Sqoop的安装部署</h1><p>1、下载：<br>wget <a target="_blank" rel="noopener" href="http://archive.cloudera.com/cdh5/cdh/5/sqoop-1.4.6-cdh5.16.2.tar.gz">http://archive.cloudera.com/cdh5/cdh/5/sqoop-1.4.6-cdh5.16.2.tar.gz</a></p>
+<p>2、解压并且做一个软连接：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf sqoop-1.4.6-cdh5.16.2.tar.gz -C ~&#x2F;app&#x2F;  </span><br><span class="line">ln -s sqoop-1.4.6-cdh5.16.2 sqoop</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3、配置系统环境变量：vi ~/.bashrc  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export SQOOP_HOME&#x3D;&#x2F;home&#x2F;wjw&#x2F;app&#x2F;sqoop-1.4.6-cdh5.16.2</span><br><span class="line">export PATH&#x3D;$SQOOP_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>4、生效环境变量：<br>source ~/.bashrc</p>
+<p>5、在$SQOOP_HOME/conf下拷贝一份文件，再进行参数配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp sqoop-env-template.sh sqoop-env.sh  </span><br><span class="line">export HADOOP_COMMON_HOME&#x3D;&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop</span><br><span class="line">export HADOOP_MAPRED_HOME&#x3D;&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hadoop</span><br><span class="line">export HIVE_HOME&#x3D;&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>6、拷贝一个驱动包到$SQOOP_HOME/lib目录下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp mysql-connector-java-5.1.27-bin.jar $SQOOP_HOME&#x2F;lib&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="3-3、Sqoop的简单使用"><a href="#3-3、Sqoop的简单使用" class="headerlink" title="3.3、Sqoop的简单使用"></a>3.3、Sqoop的简单使用</h1><p>sqoop help查看命令帮助，学习sqoop就是查字典：</p>
+<p>1、sqoop version：<br>查看版本号</p>
+<p>2、列出mysql下的数据库，查看命令帮助：sqoop help list_databases</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sqoop list-databases \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306 \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456</span><br><span class="line"></span><br><span class="line">输出结果如下：</span><br><span class="line"></span><br><span class="line">information_schema</span><br><span class="line">hue</span><br><span class="line">mysql</span><br><span class="line">performance_schema</span><br><span class="line">ruoze_hive</span><br><span class="line">ruozedata</span><br><span class="line">test</span><br><span class="line">tests</span><br><span class="line">wjwdata_hive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3、列出数据库下的表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sqoop list-tables \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;运行结果如下：</span><br><span class="line"></span><br><span class="line">dept</span><br><span class="line">emp</span><br><span class="line">salgrade</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-4、Sqoop-import的详细使用（从MySQL–-gt-hdfs）"><a href="#3-4、Sqoop-import的详细使用（从MySQL–-gt-hdfs）" class="headerlink" title="3.4、Sqoop import的详细使用（从MySQL–&gt;hdfs）"></a>3.4、Sqoop import的详细使用（从MySQL–&gt;hdfs）</h1><p>sqoop help import：查看命令帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">参数先捋一遍：</span><br><span class="line">--append</span><br><span class="line">--columns &lt;col,col,col...&gt; </span><br><span class="line">--delete-target-dir     </span><br><span class="line">-m,--num-mappers &lt;n&gt; </span><br><span class="line">--mapreduce-job-name &lt;name&gt;</span><br><span class="line">--target-dir &lt;dir&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="需求一：把sqoop中的emp数据表导到HDFS上去："><a href="#需求一：把sqoop中的emp数据表导到HDFS上去：" class="headerlink" title="需求一：把sqoop中的emp数据表导到HDFS上去："></a>需求一：把sqoop中的emp数据表导到HDFS上去：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">-m 1</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;出现如下报错：</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.NoClassDefFoundError: org&#x2F;json&#x2F;JSONObject</span><br><span class="line">        at org.apache.sqoop.util.SqoopJsonUtil.getJsonStringforMap(SqoopJsonUtil.java:43)</span><br><span class="line">        at org.apache.sqoop.SqoopOptions.writeProperties(SqoopOptions.java:784)</span><br><span class="line">        at org.apache.sqoop.Sqoop.main(Sqoop.java:252)</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: org.json.JSONObject</span><br><span class="line">        at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</span><br><span class="line">        at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;原因是缺少java-json.jar包，上传一个即可解决问题：存放目录为$SQOOP_HOME&#x2F;lib下</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个sqoop语句是会跑mapreduce任务的，App Name叫emp.jar（没有指定名字默认的名字就是emp.jar），输出结果默认是在/user/hadoop/emp下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1、如下所示，顺利的把MySQL中的数据导入到了hdfs目录上：</span><br><span class="line">[wjw@hadoop001 bin]$ hdfs dfs -ls &#x2F;user&#x2F;hadoop&#x2F;emp</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   1 hadoop supergroup          0 2017-04-03 16:08 &#x2F;user&#x2F;hadoop&#x2F;emp&#x2F;_SUCCESS</span><br><span class="line">-rw-r--r--   1 hadoop supergroup        282 2017-04-03 16:08 &#x2F;user&#x2F;hadoop&#x2F;emp&#x2F;part-m-00000</span><br><span class="line"></span><br><span class="line">2、使用了一个map所以结果是一个文件</span><br><span class="line">[wjw@hadoop001 bin]$ hdfs dfs -text &#x2F;user&#x2F;hadoop&#x2F;emp&#x2F;part*</span><br><span class="line">7369,SMITH,CLERK,7902.0,1980-12-17,800.0,null,20</span><br><span class="line">7499,ALLEN,SALESMAN,7698.0,1981-02-20,1600.0,300.0,30</span><br><span class="line">7521,WARD,SALESMAN,7698.0,1981-02-22,1250.0,500.0,30</span><br><span class="line">7566,JONES,MANAGER,7839.0,1981-04-02,2975.0,null,20</span><br><span class="line">7654,MARTIN,SALESMAN,7698.0,1981-09-28,1250.0,1400.0,30</span><br><span class="line">7698,BLAKE,MANAGER,7839.0,1981-05-01,2850.0,null,30</span><br><span class="line">7782,CLARK,MANAGER,7839.0,1981-06-09,2450.0,null,10</span><br><span class="line">7788,SCOTT,ANALYST,7566.0,1987-07-13,3000.0,null,20</span><br><span class="line">7839,KING,PRESIDENT,null,1981-11-17,5000.0,null,10</span><br><span class="line">7844,TURNER,SALESMAN,7698.0,1981-09-08,1500.0,0.0,30</span><br><span class="line">7876,ADAMS,CLERK,7788.0,1987-07-13,1100.0,null,20</span><br><span class="line">7900,JAMES,CLERK,7698.0,1981-12-03,950.0,null,30</span><br><span class="line">7902,FORD,ANALYST,7566.0,1981-12-03,3000.0,null,20</span><br><span class="line">7934,MILLER,CLERK,7782.0,1982-01-23,1300.0,null,10</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h4><p>ERROR tool：FileAlreadyExist，文件目录已存在；意思就是在导入命令中需要删除目标表：</p>
+<p>1、在$SQOOP_HOME/bin目录下执行命令的时候打印在控制台上的log信息，为什么会有一个limit1，主要是查看这张表是否存在：<br>SELECT t.* FROM <code>emp</code> AS t LIMIT 1</p>
+<p>2、为什么number of splits:1<br>设置的map就是1</p>
+<p>3、在$SQOOP_HOME/bin目录下每执行一个sqoop导入就会生成一个.java文件：</p>
+<h5 id="引出的就是：每一次执行导入命令前删除目标表："><a href="#引出的就是：每一次执行导入命令前删除目标表：" class="headerlink" title="引出的就是：每一次执行导入命令前删除目标表："></a>引出的就是：每一次执行导入命令前删除目标表：</h5><ul>
+<li>此时我们增加–delete-target-dir这个参数，通过–mapreduce-job-name参数指定作业运行的名字frommysql2hdfs，然后把指定map数恢复成默认值也就是4；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs \</span><br><span class="line">--delete-target-dir </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们把map的数量为1删掉，执行如上出现报错：原因说的很清楚了，emp表中有主键的话就不会报错，默认值就是4个map，emp表中没有主键的话就需要指定map数：</li>
+<li>ERROR tool.ImportTool: Import failed: No primary key could be found for table emp. Please specify one with –split-by or perform a sequential import with ‘-m 1’</li>
+</ul>
+<h5 id="需求二：在往hdfs中导数据的时候自己指定列，顺便更换目录（target-dir）"><a href="#需求二：在往hdfs中导数据的时候自己指定列，顺便更换目录（target-dir）" class="headerlink" title="需求二：在往hdfs中导数据的时候自己指定列，顺便更换目录（target-dir）"></a>需求二：在往hdfs中导数据的时候自己指定列，顺便更换目录（target-dir）</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://hadoop001:3306/sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs2 \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_column \</span><br><span class="line">--columns <span class="string">&quot;empno,ename,job,sal,comm&quot;</span> \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+
+<h5 id="需求三：导出的数据分割符是，我们要修改成’-t’，把null值替换为0；"><a href="#需求三：导出的数据分割符是，我们要修改成’-t’，把null值替换为0；" class="headerlink" title="需求三：导出的数据分割符是，我们要修改成’\t’，把null值替换为0；"></a>需求三：导出的数据分割符是，我们要修改成’\t’，把null值替换为0；</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://hadoop001:3306/sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs2 \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_column \</span><br><span class="line">--columns <span class="string">&quot;empno,ename,job,sal,comm&quot;</span> \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;\t&#x27;</span> \</span><br><span class="line">--null-string <span class="string">&#x27;&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;0&#x27;</span> \</span><br><span class="line">-m 1</span><br><span class="line"></span><br><span class="line">//--fields-terminated-by <span class="string">&#x27;\t&#x27;</span>把导出数据的分割符换成\t，-- null-string <span class="string">&#x27;&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;0&#x27;</span> \ --&gt;意思是把空的字符串值替换为0</span><br><span class="line">--<span class="built_in">where</span> <span class="string">&#x27;SAL&gt;2000&#x27;</span>  //根据条件来导</span><br><span class="line">--query <span class="string">&#x27;sql语句&#x27;</span>  //根据sql语句来导，不能与table一起使用哦 + and <span class="variable">$CONDITIONS</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="需求四：限定条件或者SQL语句执行；"><a href="#需求四：限定条件或者SQL语句执行；" class="headerlink" title="需求四：限定条件或者SQL语句执行；"></a>需求四：限定条件或者SQL语句执行；</h5><p>1、和where连用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs-where \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_where \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1 \</span><br><span class="line">--where &#39;SAL&gt;2000&#39;</span><br></pre></td></tr></table></figure>
+<p>2、直接sql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs-query \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_query \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1 \</span><br><span class="line">--query &#39;select * from emp where EMPON &gt; 7900 &#39;</span><br></pre></td></tr></table></figure>
+<p>报错：-line is insecure. Consider using -P instead.<br>Cannot specify –query and –table together.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs-query \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_query \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1 \</span><br><span class="line">--query &#39;select * from emp where EMPON &gt; 7900 &#39;</span><br></pre></td></tr></table></figure>
+<p>报错：ERROR tool.ImportTool: Import failed: java.io.IOException: Query [select * from emp where EMPON &gt; 7900 ] must contain ‘$CONDITIONS’ in WHERE clause.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs-query \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_query \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1 \</span><br><span class="line">--query &#39;select * from emp where EMPNO &gt; 7900 and $CONDITIONS &#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--mapreduce-job-name frommysql2hdfs-query \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--target-dir emp_query \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1 \</span><br><span class="line">--query &quot;select * from emp where EMPNO &gt; 7900 and \$CONDITIONS &quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>–where ‘SAL&gt;2000’  //根据条件来导</li>
+<li>–query ‘sql语句’  //根据sql语句来导，不能与table一起使用哦 + and $CONDITIONS 需要加转义符</li>
+</ul>
+<h5 id="需求五：增量导数据；"><a href="#需求五：增量导数据；" class="headerlink" title="需求五：增量导数据；"></a>需求五：增量导数据；</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp  \</span><br><span class="line">--mapreduce-job-name FromMySQL2HDFS \</span><br><span class="line">--target-dir APPEND \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">--null-string &#39;&#39; \</span><br><span class="line">--incremental append \</span><br><span class="line">--check-column EMPNO \</span><br><span class="line">--last-value 7788 \</span><br><span class="line">--null-non-string &#39;0&#39; \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>–incremental append \ 方式</li>
+<li>–check-column EMPNO \ 字段</li>
+<li>–last-value 7788 \ 最后一个数值<h5 id="需求五：展示sql结果，插入一天数据；"><a href="#需求五：展示sql结果，插入一天数据；" class="headerlink" title="需求五：展示sql结果，插入一天数据；"></a>需求五：展示sql结果，插入一天数据；</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sqoop eval \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--query &quot;insert into dept values (100,&#39;RD&#39;, &#39;BEIJING&#39;)&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--table salgrade \</span><br><span class="line">--split-by &#39;GRADE&#39;</span><br></pre></td></tr></table></figure>
+<p>注意：在表没有主键的情况下，需要设置 -m 1 或者增加 –split-by + 字段</p>
+<h5 id="需求六：另一种方式任务提交方式；"><a href="#需求六：另一种方式任务提交方式；" class="headerlink" title="需求六：另一种方式任务提交方式；"></a>需求六：另一种方式任务提交方式；</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[wjw@hadoop001 data]$ vim  sqoop_emp.opt</span><br><span class="line">import</span><br><span class="line">--connect</span><br><span class="line">jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop</span><br><span class="line">--password</span><br><span class="line">123456</span><br><span class="line">--username</span><br><span class="line">root</span><br><span class="line">--target-dir</span><br><span class="line">EMP_OPTIONS_FILE2</span><br><span class="line">--delete-target-dir</span><br><span class="line">--table</span><br><span class="line">emp</span><br><span class="line">-m</span><br><span class="line">2</span><br><span class="line">[wjw@hadoop001 data]$ sqoop --options-file .&#x2F;sqoop_emp.opt </span><br></pre></td></tr></table></figure>
+<h5 id="常见的面试题："><a href="#常见的面试题：" class="headerlink" title="常见的面试题："></a>常见的面试题：</h5><p>1、Sort by和order by的区别？</p>
+<ul>
+<li>sort by是每个分区有序，order by是保证了全局有序：</li>
+</ul>
+<p>2、hadoop fs -ls和hadoop fs -ls /的区别？<br>不加斜杠意味着的是：/user/hadoop –&gt;/用户/当前用户名<br>加斜杠意味着的是hdfs的根目录</p>
+<p>3、This transfer can be faster! Use the –direct<br>–direct?能够提速呢？  SQOOP官网</p>
+<h1 id="3-5、Sqoop-的详细使用（从HDFS–-gt-MYSQL）"><a href="#3-5、Sqoop-的详细使用（从HDFS–-gt-MYSQL）" class="headerlink" title="3.5、Sqoop 的详细使用（从HDFS–&gt;MYSQL）"></a>3.5、Sqoop 的详细使用（从HDFS–&gt;MYSQL）</h1><h2 id="3-5-1-export的使用"><a href="#3-5-1-export的使用" class="headerlink" title="3.5.1 export的使用"></a>3.5.1 export的使用</h2><h6 id="需求一：将hdfs中的emp数据导入mysql的emp-demo表中"><a href="#需求一：将hdfs中的emp数据导入mysql的emp-demo表中" class="headerlink" title="需求一：将hdfs中的emp数据导入mysql的emp_demo表中"></a>需求一：将hdfs中的emp数据导入mysql的emp_demo表中</h6><p>首先在mysql创建emp_demo表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table emp_demo as select * from emp where 1&#x3D;2;</span><br></pre></td></tr></table></figure>
+<p>导入语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqoop export \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp_demo \</span><br><span class="line">--export-dir &#x2F;user&#x2F;wjw&#x2F;emp \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<p>重复上面语句，会导致emp_demo数据重复</p>
+<h5 id="需求二：控制字段导入数据"><a href="#需求二：控制字段导入数据" class="headerlink" title="需求二：控制字段导入数据"></a>需求二：控制字段导入数据</h5><p><strong>当看到导出失败，应该第一时间见想分隔符是否正确</strong><br>现将emp_demo数据清空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table emp_demo;</span><br></pre></td></tr></table></figure>
+<p>导入语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sqoop export \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp_demo \</span><br><span class="line">--export-dir &#x2F;user&#x2F;hadoop&#x2F;EMP_COLUMN_SPLIT \</span><br><span class="line">--columns &quot;EMPNO,ENAME,JOB,SAL,COMM&quot; \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<p><strong>优化：按批量导出增加参数：-Dsqoop.export.records.per.statement=10 一次导出条数<br>生产上根据你们的生产阈值设定一下</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop export \</span><br><span class="line">-Dsqoop.export.records.per.statement&#x3D;10 \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp_demo \</span><br><span class="line">--export-dir &#x2F;user&#x2F;hadoop&#x2F;EMP_COLUMN_SPLIT \</span><br><span class="line">--columns &quot;EMPNO,ENAME,JOB,SAL,COMM&quot; \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<h2 id="3-5-2-mysql-导入hive"><a href="#3-5-2-mysql-导入hive" class="headerlink" title="3.5.2 mysql 导入hive"></a>3.5.2 mysql 导入hive</h2><h5 id="需求一：往hive内部表导数据"><a href="#需求一：往hive内部表导数据" class="headerlink" title="需求一：往hive内部表导数据"></a>需求一：往hive内部表导数据</h5><ul>
+<li>首先在hive中创建目标表<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp_import(</span><br><span class="line">empno int,</span><br><span class="line">ename string,</span><br><span class="line">job string,</span><br><span class="line">mgr int,</span><br><span class="line">hiredate string,</span><br><span class="line">sal double,</span><br><span class="line">comm double,</span><br><span class="line">deptno int</span><br><span class="line">) ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;\t&#39;;</span><br></pre></td></tr></table></figure></li>
+<li>有问题的导入语句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--hive-import --hive-database wjwdata_hive \</span><br><span class="line">--hive-table emp_import \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure></li>
+<li>错误：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">①</span><br><span class="line">ERROR hive.HiveConfig: Could not load org.apache.hadoop.hive.conf.HiveConf. Make sure HIVE_CONF_DIR is set correctly.</span><br><span class="line">ERROR tool.ImportTool: Import failed: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</span><br><span class="line">解决方法：</span><br><span class="line">往~&#x2F;.bashrc 最后加入 export HADOOP_CLASSPATH&#x3D;$HADOOP_CLASSPATH:$HIVE_HOME&#x2F;lib&#x2F;*</span><br><span class="line">然后刷新配置，source ~&#x2F;.bashrc</span><br><span class="line">②</span><br><span class="line">Logging initialized using configuration in jar:file:&#x2F;home&#x2F;wjw&#x2F;app&#x2F;hive-1.1.0-cdh5.16.2&#x2F;lib&#x2F;hive-exec-1.1.0-cdh5.16.2.jar!&#x2F;hive-log4j.properties</span><br><span class="line">FAILED: SemanticException [Error 10072]: Database does not exist: wjwdata_hive</span><br><span class="line">解决方法：复制hive&#x2F;conf下的hive-site.xml到sqoop工作目录的conf下</span><br><span class="line">实际上该database是在hive中存在的，由于sqoop下的配置文件太旧引起的，一般会出现在,换台机器执行sqoop</span><br><span class="line">③</span><br><span class="line">emp_import.empno	emp_import.ename	emp_import.job	emp_import.mgremp_import.hiredate	emp_import.sal	emp_import.comm	emp_import.deptno</span><br><span class="line">NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL</span><br><span class="line">数据为空；</span><br><span class="line">解决方案：增加分隔符。--fields-terminated-by &#39;\t&#39; \</span><br></pre></td></tr></table></figure></li>
+<li>正确的语句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--hive-import --hive-database wjwdata_hive \</span><br><span class="line">--hive-table emp_import \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<h5 id="需求二：往hive分区表导数据"><a href="#需求二：往hive分区表导数据" class="headerlink" title="需求二：往hive分区表导数据"></a>需求二：往hive分区表导数据</h5></li>
+<li>创建目标分区表<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp_import_partition(</span><br><span class="line">empno int,</span><br><span class="line">ename string,</span><br><span class="line">job string,</span><br><span class="line">mgr int,</span><br><span class="line">hiredate string,</span><br><span class="line">sal double,</span><br><span class="line">comm double,</span><br><span class="line">deptno int</span><br><span class="line">)</span><br><span class="line">partitioned by (pt string)</span><br><span class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;\t&#39;;</span><br></pre></td></tr></table></figure></li>
+<li>导入语句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql:&#x2F;&#x2F;hadoop001:3306&#x2F;sqoop \</span><br><span class="line">--username root \</span><br><span class="line">--password 123456 \</span><br><span class="line">--table emp \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--hive-import --hive-database wjwdata_hive \</span><br><span class="line">--hive-table emp_import_partition \</span><br><span class="line">--hive-partition-key &#39;pt&#39; \</span><br><span class="line">--hive-partition-value &#39;2017-12-30&#39; \</span><br><span class="line">--fields-terminated-by &#39;\t&#39; \</span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<h2 id="3-5-3-hive导出到mysql"><a href="#3-5-3-hive导出到mysql" class="headerlink" title="3.5.3 hive导出到mysql"></a>3.5.3 hive导出到mysql</h2><h5 id="需求一：将hive表导入到mysql"><a href="#需求一：将hive表导入到mysql" class="headerlink" title="需求一：将hive表导入到mysql"></a>需求一：将hive表导入到mysql</h5></li>
+<li>创建目标表<figure class="highlight plain"><figcaption><span>table emp_demo1 as select * from emp where 1</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">* 导入语句</span><br></pre></td></tr></table></figure>
+sqoop export \</li>
+</ul>
+<p>–connect jdbc:mysql://hadoop001:3306/sqoop <br>–username root <br>–password 123456 <br>–table dept_demo <br>–export-dir /user/hive/warehouse/wjwdata_hive.db/dept <br>–fields-terminated-by ‘\t’ <br>-m 1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">测试：指定数据库和表名导出</span><br><span class="line"></span><br><span class="line"># 3.6  sqoop job封装</span><br><span class="line">## 3.6.1 job的使用</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>//查看job列表<br>sqoop job –list<br>//命令<br>sqoop job –craete wjw-sqoop-job – <br>import –connect jdbc:mysql://hadoop001:3306/sqoop <br>–username root <br>–password 123456 <br>–table emp <br>–delete-target-dir</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**密码是明文的，如何让它从文件中加载密码，这个密码文件不是所有人都知道的？？**</span><br></pre></td></tr></table></figure>
+<p>sqoop job –delete myjob   //删除某个job</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 标准的任务脚本</span><br><span class="line">**shell  脚本**</span><br></pre></td></tr></table></figure>
+<p>#!/bin/sh<br>set -x</p>
+<p>sqoop 导入命令<br> mysql导入hive</p>
+<p>sql=”insert overwrite table 表名 + sql语句”</p>
+<p>hive -e $sql</p>
+<p>mysql -uroot -p123456 &lt;&lt;EOF<br>    use sqoop;<br>    delete 表名; //truncate 表名 清空表<br>EOF</p>
+<p>sqoop 导出命令<br>hive导出mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**命令执行需要先增加执行权限**</span><br></pre></td></tr></table></figure>
+<p>chmod +x etl.sh</p>
+<p>./etl.sh  //执行命令</p>
+<pre><code>
+
+
+
+</code></pre>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hive</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Sqoop</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,123 +469,123 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/03/26/Hive04/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/03/30/3-hadoopapi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hadop API
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/20/Hive03/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hive02</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="Hive04" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +608,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

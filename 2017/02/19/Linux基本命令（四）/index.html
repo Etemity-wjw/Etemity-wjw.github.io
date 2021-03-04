@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Java | Etemity</title>
+  <title>Linux基本命令（四） | Etemity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etemity">
-<meta property="og:url" content="http://example.com/tags/Java/index.html">
+  <meta name="description" content="Linux基本命令（四）1.vi 命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基本命令（四）">
+<meta property="og:url" content="http://example.com/2017/02/19/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Etemity">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="Linux基本命令（四）1.vi 命令">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191124172226372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2017-02-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T11:04:20.555Z">
 <meta property="article:author" content="Etemity">
-<meta property="article:tag" content="后端博客，Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191124172226372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="Etemity" type="application/atom+xml">
   
@@ -216,181 +221,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux基本命令（四）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/" class="archive-article-date">
-  	<time datetime="2016-08-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/06/01-%E5%85%B3%E4%BA%8Emaven%E5%92%8Cidea%E7%9A%84%E6%95%B4%E5%90%88/">关于maven和idea的整合</a>
+    <h1 class="article-title" itemprop="name">
+      Linux基本命令（四）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/02/19/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2017-02-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux基本命令（四）"><a href="#Linux基本命令（四）" class="headerlink" title="Linux基本命令（四）"></a>Linux基本命令（四）</h1><h2 id="1-vi-命令"><a href="#1-vi-命令" class="headerlink" title="1.vi 命令"></a>1.vi 命令</h2><span id="more"></span>
+
+<h3 id="1-1-vi-编辑命令过程图"><a href="#1-1-vi-编辑命令过程图" class="headerlink" title="1.1 vi 编辑命令过程图"></a>1.1 vi 编辑命令过程图</h3><p><img src="https://img-blog.csdnimg.cn/20191124172226372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqdzA4MDY=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 jepson]# vi hadoop.log002 </span><br><span class="line">[root@hadoop001 jepson]# cat hadoop.log002 </span><br><span class="line">www.baidu.com</span><br><span class="line">[root@hadoop001 jepson]# </span><br></pre></td></tr></table></figure>
+<h3 id="1-2-粘贴时必须进入插入模式（i）才能出现不丢失。"><a href="#1-2-粘贴时必须进入插入模式（i）才能出现不丢失。" class="headerlink" title="1.2 粘贴时必须进入插入模式（i）才能出现不丢失。"></a>1.2 粘贴时必须进入插入模式（i）才能出现不丢失。</h3><h3 id="1-3-查找error"><a href="#1-3-查找error" class="headerlink" title="1.3 查找error"></a>1.3 查找error</h3><p>cat xxx.log | grep -C 10 ERROR &gt; error.log</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 jepson]# cat error.log | grep -C 10 error &gt; error001.log</span><br><span class="line">[root@hadoop001 jepson]# cat error001.log </span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span></span><br><span class="line"><span class="number">15</span></span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">17</span></span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">20</span></span><br><span class="line">error</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line">[root@hadoop001 jepson]# </span><br></pre></td></tr></table></figure>
+<p>也可以通过cat、more和sz命令进行查找error。<br><strong>进入尾行模式:/关键词 回车自动匹配 ，按N键找寻下一个。</strong></p>
+<h3 id="1-4-设置行号"><a href="#1-4-设置行号" class="headerlink" title="1.4 设置行号"></a>1.4 设置行号</h3><p><strong>进入尾行模式:<br>set nu  ：设置行号<br>set nonu  ：取消行号</strong></p>
+<h3 id="1-5-清空文件内容"><a href="#1-5-清空文件内容" class="headerlink" title="1.5 清空文件内容"></a>1.5 清空文件内容</h3><p>cat /dev/null &gt; xxx.log 最佳的清空方法<br>echo ‘’ &gt; xxx.log 此方式会存在1个字节<br><strong>命令行模式常见的快捷键:</strong><br>dd            删除当前行<br>dG           删除光标当前及以下的所有行<br>ndd          删除光标当前及以下的n行<br>gg            跳转到第一行的第一个字母<br>G             跳转到最后一行的第一个字母<br>shift+$     最后一行行尾<br>gg + dG   清空：先gg在dG全部清空</p>
+<p>场景: 从另外一个文本拷贝内容去覆盖这个文件<br>大数据的组件都是xml文件<br>1.官方的默认的配置文件 xxxxxxx 30行<br>2.window记事本 editplus编辑好对应的参数 300<br>坑： cp备份（进入插入模式粘贴）<br>mysql的 my.cnf </p>
+<h2 id="2-系统命令"><a href="#2-系统命令" class="headerlink" title="2.系统命令"></a>2.系统命令</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# df -h //查看系统磁盘</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root   48G  <span class="number">1.</span>8G   47G   <span class="number">4</span>% <span class="regexp">/   /</span><span class="regexp">/生产中系统盘200G左右</span></span><br><span class="line"><span class="regexp">devtmpfs                 3.8G     0  3.8G   0% /</span>dev</span><br><span class="line">tmpfs                    <span class="number">3.</span>9G     <span class="number">0</span>  <span class="number">3.</span>9G   <span class="number">0</span>% <span class="regexp">/dev/</span>shm</span><br><span class="line">tmpfs                    <span class="number">3.</span>9G   12M  <span class="number">3.</span>8G   <span class="number">1</span>% /run</span><br><span class="line">tmpfs                    <span class="number">3.</span>9G     <span class="number">0</span>  <span class="number">3.</span>9G   <span class="number">0</span>% <span class="regexp">/sys/</span>fs/cgroup</span><br><span class="line">/dev/sda1               1014M  146M  869M  <span class="number">15</span>% /boot</span><br><span class="line">/dev/mapper/centos-home   24G  716M   23G   <span class="number">3</span>% /home</span><br><span class="line">tmpfs                    781M     <span class="number">0</span>  781M   <span class="number">0</span>% <span class="regexp">/run/u</span>ser/<span class="number">0</span></span><br><span class="line">[root@hadoop001 ~]# free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           <span class="number">7802</span>         <span class="number">180</span>        <span class="number">7422</span>          <span class="number">11</span>         <span class="number">200</span>        <span class="number">7361</span></span><br><span class="line">Swap:          <span class="number">8063</span>           <span class="number">0</span>        <span class="number">8063</span></span><br><span class="line">[root@hadoop001 ~]# top      //查看系统负载</span><br><span class="line">top - <span class="number">18</span>:<span class="number">06</span>:<span class="number">44</span> up  <span class="number">1</span>:<span class="number">03</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br><span class="line">Tasks: <span class="number">106</span> total,   <span class="number">1</span> running, <span class="number">105</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%Cpu(s):  <span class="number">0.0</span> us,  <span class="number">0.0</span> sy,  <span class="number">0.0</span> ni,<span class="number">100.0</span> id,  <span class="number">0.0</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">KiB Mem :  <span class="number">7990252</span> total,  <span class="number">7598804</span> free,   <span class="number">185260</span> used,   <span class="number">206188</span> buff/cache</span><br><span class="line">KiB Swap:  <span class="number">8257532</span> total,  <span class="number">8257532</span> free,        <span class="number">0</span> used.  <span class="number">7537052</span> avail Mem </span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND          </span><br><span class="line"> <span class="number">12130</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.3</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">01</span><span class="number">.06</span> kworker/<span class="number">0</span>:<span class="number">3</span>      </span><br><span class="line"> <span class="number">13185</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">161880</span>   <span class="number">2196</span>   <span class="number">1556</span> R  <span class="number">0.3</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.16</span> top              </span><br><span class="line">     <span class="number">1</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">127960</span>   <span class="number">6536</span>   <span class="number">4136</span> S  <span class="number">0.0</span>  <span class="number">0.1</span>   <span class="number">0</span>:<span class="number">01</span><span class="number">.82</span> systemd          </span><br><span class="line">     <span class="number">2</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> kthreadd         </span><br><span class="line">     <span class="number">3</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.11</span> ksoftirqd/<span class="number">0</span>      </span><br><span class="line">     <span class="number">5</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> kworker/<span class="number">0</span>:0H     </span><br><span class="line">     <span class="number">6</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.13</span> kworker/u256:<span class="number">0</span>   </span><br><span class="line">     <span class="number">7</span> root      rt   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> migration/<span class="number">0</span>      </span><br><span class="line">     <span class="number">8</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> rcu_bh           </span><br><span class="line">     <span class="number">9</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.54</span> rcu_sched        </span><br><span class="line">    <span class="number">10</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> lru-add-drain    </span><br><span class="line">    <span class="number">11</span> root      rt   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.02</span> watchdog/<span class="number">0</span>       </span><br><span class="line">    <span class="number">13</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> kdevtmpfs        </span><br><span class="line">    <span class="number">14</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> netns            </span><br><span class="line">    <span class="number">15</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> khungtaskd       </span><br><span class="line">    <span class="number">16</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> writeback        </span><br><span class="line">    <span class="number">17</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> kintegrityd      </span><br><span class="line">    <span class="number">18</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00</span><span class="number">.00</span> bioset           </span><br><span class="line"><span class="comment">//经验值 不要超过10  否则认为此物理服务器 IDC机房</span></span><br><span class="line"><span class="comment">//cpu、men 超过100% 有问题 代码级别 硬件级别(内存条坏了)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-查看进程-查看端口号"><a href="#3-查看进程-查看端口号" class="headerlink" title="3.查看进程 查看端口号"></a>3.查看进程 查看端口号</h2><p>3.1 ps -ef 查看当前进程</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# ps -ef|grep ssh</span><br><span class="line">root       <span class="number">9750</span>      <span class="number">1</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">19</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/sshd -D</span><br><span class="line">root      <span class="number">10264</span>   <span class="number">9750</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">23</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> sshd: root@pts/<span class="number">0</span></span><br><span class="line">root      <span class="number">10337</span>  <span class="number">10268</span>  <span class="number">0</span> <span class="number">14</span>:<span class="number">34</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=auto ssh</span><br><span class="line">[root@hadoop001 ~]# ps -ef|grep ssh | grep -v grep // -v 过滤grep</span><br><span class="line">root       <span class="number">9750</span>      <span class="number">1</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">19</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/sshd -D</span><br><span class="line">root      <span class="number">10264</span>   <span class="number">9750</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">23</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> sshd: root@pts/<span class="number">0</span></span><br><span class="line"><span class="comment">//进程用户 进程的pid 父id                     进程用户的内容（进程所属的目录 log -Xmx -Xms）</span></span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+<p>3.2 查看进程端口号</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# netstat -nlp | grep 9750</span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">22</span>              <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:*               LISTEN      <span class="number">9750</span>/sshd           </span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> :::<span class="number">22</span>                   :::*                    LISTEN      <span class="number">9750</span>/sshd           </span><br><span class="line">    </span><br><span class="line">    [root@hadoop001 ~]# netstat -nlp | grep ssh</span><br><span class="line">tcp        <span class="number">0</span>      <span class="number">0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">22</span>              <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:*               LISTEN      <span class="number">9750</span>/sshd           </span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> :::<span class="number">22</span>                   :::*                    LISTEN      <span class="number">9750</span>/sshd           </span><br><span class="line">[root@hadoop001 ~]# </span><br><span class="line"><span class="comment">//通过pid找prot</span></span><br><span class="line"><span class="comment">//1、启动一个进程 ps 必须</span></span><br><span class="line"><span class="comment">//2:、可能启动一个port  netstat 不是必须</span></span><br></pre></td></tr></table></figure>
+<p>3.3 安装服务，打开web</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# service httpd start</span><br><span class="line">Redirecting to /bin/systemctl start httpd.service</span><br><span class="line">[root@hadoop001 ~]# systemctl start httpd</span><br><span class="line">[root@hadoop001 ~]# systemctl status httpd</span><br><span class="line">● httpd.service - The Apache HTTP Server</span><br><span class="line">   Loaded: loaded (<span class="regexp">/usr/</span>lib/systemd/system/httpd.service; disabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Tue <span class="number">2017</span>-<span class="number">11</span>-<span class="number">26</span> <span class="number">15</span>:<span class="number">04</span>:<span class="number">43</span> CST; 54s ago</span><br><span class="line">     Docs: man:httpd(<span class="number">8</span>)</span><br><span class="line">           man:apachectl(<span class="number">8</span>)</span><br><span class="line"> Main PID: <span class="number">10438</span> (httpd)</span><br><span class="line">   Status: <span class="string">&quot;Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span></span><br><span class="line">   CGroup: <span class="regexp">/system.slice/</span>httpd.service</span><br><span class="line">           ├─<span class="number">10438</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─<span class="number">10439</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─<span class="number">10440</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─<span class="number">10441</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─<span class="number">10442</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           └─<span class="number">10443</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line"></span><br><span class="line">Nov <span class="number">26</span> <span class="number">15</span>:<span class="number">04</span>:<span class="number">43</span> hadoop001 systemd[<span class="number">1</span>]: Starting The Apache HTTP Server...</span><br><span class="line">Nov <span class="number">26</span> <span class="number">15</span>:<span class="number">04</span>:<span class="number">43</span> hadoop001 httpd[<span class="number">10438</span>]: AH00558: httpd: Could not reliably determine the server<span class="string">&#x27;s full...sage</span></span><br><span class="line"><span class="string">Nov 26 15:04:43 hadoop001 systemd[1]: Started The Apache HTTP Server.</span></span><br><span class="line"><span class="string">Hint: Some lines were ellipsized, use -l to show in full.</span></span><br><span class="line"><span class="string">[root@hadoop001 ~]# ps -ef|grep http</span></span><br><span class="line"><span class="string">root      10438      1  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">apache    10439  10438  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">apache    10440  10438  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">apache    10441  10438  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">apache    10442  10438  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">apache    10443  10438  0 15:04 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND</span></span><br><span class="line"><span class="string">root      10453  10268  0 15:08 pts/0    00:00:00 grep --color=auto http</span></span><br><span class="line"><span class="string">[root@hadoop001 ~]# netstat -nlp | grep 10438</span></span><br><span class="line"><span class="string">tcp6       0      0 :::80                   :::*                    LISTEN      10438/httpd         </span></span><br></pre></td></tr></table></figure>
+<p>3.4 场景： 在centos部署大数据组件，发现一个错误 Connection refused ，防火墙 web  iptables<br>ping ip 测试ip<br>telnet ip port 测试ip和端口号<br>部署telnet命令<br>window系统  cmd黑窗口 不带 telnet命令 ，需要去安装一下 重启电脑<br>Linux 系统</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# yum install -y telnet</span><br><span class="line">[root@hadoop001 ~]# telnet 192.168.110.141 80</span><br><span class="line">Trying <span class="number">192.168</span><span class="number">.110</span><span class="number">.141</span>...</span><br><span class="line">Connected to <span class="number">192.168</span><span class="number">.110</span><span class="number">.141</span>.</span><br><span class="line">Escape character is <span class="string">&#x27;^]&#x27;</span>.</span><br></pre></td></tr></table></figure>
+<h2 id="4-高危命令"><a href="#4-高危命令" class="headerlink" title="4.高危命令"></a>4.高危命令</h2><p>rm -rf / 删除根目录<br>vi 生产配置文件时，先进行复制一份<br>ps进程xxx，<br>kill -9 进程pid<br>kill -9 进程pid 进程pid 进程pid<br>kill -9 $(pgrep -f 匹配关键词)<br>杀进程之前，先ps 找到相关的进程，搞清楚，哪些是你要杀的，不然造成生产事故</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# ps -ef |grep http</span><br><span class="line">root      <span class="number">10438</span>      <span class="number">1</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10439</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10440</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10441</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10442</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10443</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">04</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">apache    <span class="number">10466</span>  <span class="number">10438</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">23</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">root      <span class="number">10473</span>  <span class="number">10268</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">49</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=auto http</span><br><span class="line">[root@hadoop001 ~]# kill -9 $(pgrep -f http)</span><br><span class="line">[root@hadoop001 ~]# ps -ef |grep http</span><br><span class="line">root      <span class="number">10480</span>  <span class="number">10268</span>  <span class="number">0</span> <span class="number">15</span>:<span class="number">50</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=auto http</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="5-安装yum软件"><a href="#5-安装yum软件" class="headerlink" title="5.安装yum软件"></a>5.安装yum软件</h2><p>yum search xxx  查找<br>yum install -y xxx-yyy 安装<br>yum remove xxx-yyy 移除</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 ~]# rpm -e httpd-tools-2.4.6-90.el7.centos.x86_64</span><br><span class="line">error: Failed dependencies:</span><br><span class="line">	httpd-tools = <span class="number">2.4</span><span class="number">.6</span>-<span class="number">90.</span>el7.centos is needed by (installed) httpd-<span class="number">2.4</span><span class="number">.6</span>-<span class="number">90.</span>el7.centos.x86_64</span><br><span class="line">[root@hadoop001 ~]# rpm -e httpd-2.4.6-90.el7.centos.x86_64</span><br><span class="line">[root@hadoop001 ~]# rpm -e httpd-tools-2.4.6-90.el7.centos.x86_64</span><br><span class="line">[root@hadoop001 ~]# rpm -qa | grep http</span><br><span class="line">[root@hadoop001 ~]# rpm -e --nodeps httpd-tools-2.4.6-90.el7.centos.x86_64 //不效验删除</span><br><span class="line">[root@hadoop001 ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="6-wget下载安装包"><a href="#6-wget下载安装包" class="headerlink" title="6.wget下载安装包"></a>6.wget下载安装包</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001~]# wget http://archive.cloudera.com/cdh5/</span><br></pre></td></tr></table></figure>
+<h2 id="7-压缩与解压"><a href="#7-压缩与解压" class="headerlink" title="7.压缩与解压"></a>7.压缩与解压</h2><p>zip压缩与解压<br>zip -r xxx.zip ./*  在文件夹里面<br>zip -r ruozedata.zip ruozedata/* 在外面</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop001 jepson]# zip -r 100.zip ./error001.log hadoop.log002 </span><br><span class="line">  adding: error001.log (deflated <span class="number">32</span>%)</span><br><span class="line">  adding: hadoop.log002 (stored <span class="number">0</span>%)</span><br><span class="line">[root@hadoop001 jepson]# ll</span><br><span class="line">total <span class="number">16</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">395</span> Nov <span class="number">26</span> <span class="number">16</span>:<span class="number">19</span> <span class="number">100.</span>zip</span><br><span class="line">drwxrwxrwx. <span class="number">2</span> root root   <span class="number">6</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">06</span> <span class="number">3</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root  <span class="number">27</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">24</span> a</span><br><span class="line">drwxr-xr-x. <span class="number">3</span> root root  <span class="number">15</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">01</span> b</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">78</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">36</span> error001.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">147</span> Nov <span class="number">18</span> <span class="number">14</span>:<span class="number">06</span> error.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">14</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">25</span> hadoop.log002</span><br><span class="line">[root@hadoop001 jepson]# rm -f error001.log hadoop.log002 </span><br><span class="line">[root@hadoop001 jepson]# unzip 100.zip</span><br><span class="line">Archive:  <span class="number">100.</span>zip</span><br><span class="line">  inflating: error001.log            </span><br><span class="line"> extracting: hadoop.log002           </span><br><span class="line">[root@hadoop001 jepson]# ll</span><br><span class="line">total <span class="number">16</span></span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">395</span> Nov <span class="number">26</span> <span class="number">16</span>:<span class="number">19</span> <span class="number">100.</span>zip</span><br><span class="line">drwxrwxrwx. <span class="number">2</span> root root   <span class="number">6</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">06</span> <span class="number">3</span></span><br><span class="line">drwxr-xr-x. <span class="number">2</span> root root  <span class="number">27</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">24</span> a</span><br><span class="line">drwxr-xr-x. <span class="number">3</span> root root  <span class="number">15</span> Nov <span class="number">18</span> <span class="number">13</span>:<span class="number">01</span> b</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">78</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">36</span> error001.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">147</span> Nov <span class="number">18</span> <span class="number">14</span>:<span class="number">06</span> error.log</span><br><span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">14</span> Nov <span class="number">24</span> <span class="number">17</span>:<span class="number">25</span> hadoop.log002</span><br><span class="line">[root@hadoop001 jepson]# </span><br></pre></td></tr></table></figure>
+<p>tar的解压与压缩<br>大数据组件的压缩包几乎都是后缀 tar.gz<br>tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz<br>tar -czvf hadoop-2.6.0-cdh5.16.2.tar.gz  hadoop-2.6.0-cdh5.16.2/*<br>Examples:<br>  tar -cf archive.tar foo bar  # Create archive.tar from files foo and bar.<br>  tar -tvf archive.tar         # List all files in archive.tar verbosely.<br>  tar -xf archive.tar          # Extract all files from archive.tar.</p>
+
+      
+
+       <!-- 添加版权声明 -->
+    
+
+  <div class="declare" hidden="hidden"></div>
+
+      <!-- 添加版权声明 -->
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/02/2-junit/" class="archive-article-date">
-  	<time datetime="2016-08-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/02/2-junit/">junit的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">进阶</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/进阶//" class="article-tag-list-link color3">进阶</a>
+        			<a href="/categories/运维//" class="article-tag-list-link color3">运维</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2017/02/19/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E5%9B%9B%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-04-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-01</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/02/20/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%BA%94%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux基本命令（五）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/18/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux基本命令（三）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/01/Java%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89/">Java基础（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+  <div id="SOHUCS" sid="Linux基本命令（四）" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvkQe3Yk",
+        conf: "47c3799066595c75437c05f6bcb2b4dc"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -413,9 +453,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
